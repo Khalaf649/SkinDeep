@@ -1,7 +1,5 @@
-
 import numpy as np
 from copy import deepcopy
-import json
 
 from explicit_finite_difference import solve_finite_difference_explicit
 from implicit import solve_finite_difference_implicit
@@ -28,28 +26,32 @@ def compute_relative_error(params, method1, method2):
     result1 = method1(deepcopy(params))
     result2 = method2(deepcopy(params))
 
-    sol1 = np.array(result1['result']['solutions'])  # Shape: (num_time_steps, num_space_points)
-    sol2 = np.array(result2['result']['solutions'])
+    sol1 = np.array(result1['result']['solutions']) 
+    sol2 = np.array(result2['result']['solutions']) 
     time_labels = result1['tOutputLabels']
 
     assert sol1.shape == sol2.shape, "Shape mismatch between methods' solutions."
 
-    relative_errors = []
+    
+    l2_errors = []
+
     for u1, u2 in zip(sol1, sol2):
-        norm_ref = np.linalg.norm(u1)
-        if norm_ref == 0:
-            err = 0.0
-        else:
-            err = np.linalg.norm(u2 - u1) / norm_ref
-        relative_errors.append(err)
+        epsilon = 1e-10  
+        error = np.abs(u2 - u1) / (np.abs(u1) + epsilon)
+       
+        l2_err = np.sqrt(np.mean(error**2))
+       
+        l2_errors.append(l2_err)
+
+   
 
     return {
-        "relative_errors": relative_errors,
+        "relative_errors": l2_errors,
         "time_labels": time_labels,
         "label1": label1,
         "label2": label2,
         "time_1": result1['result']['time'],
         "time_2": result2['result']['time'],
-        "matrix_1": sol1.tolist(),  # Full matrix for method1
-        "matrix_2": sol2.tolist(),  # Full matrix for method2
+        "matrix_1": sol1.tolist(),
+        "matrix_2": sol2.tolist(),
     }
