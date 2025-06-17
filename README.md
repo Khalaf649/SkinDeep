@@ -10,67 +10,130 @@ $$
 
 Where:
 
-- **\( u(r,t) \)**: Cell density (cells/cm³)
-- **\( r \)**: Spatial coordinate (cm), \( 0 \leq r \leq r_0 \)
-- **\( t \)**: Time (seconds)
-- **\( u_0 \)**: Carrying capacity (normalized to 1)
-- **\( r_0 \)**: Wound half-width (0.5 cm)
-- **\( D \)**: Cell diffusivity (\( 2.0 \times 10^{-9} \) cm²/s)
-- **\( p \)**: Nonlinear diffusion exponent (0, 1, or 5)
-- **\( s_c \)**: Proliferation rate (0 or \( 8.0 \times 10^{-6} \) s⁻¹)
+- **u(r, t)**: Cell density (cells/cm³)  
+- **r**: Spatial coordinate (cm), 0 ≤ r ≤ r₀  
+- **t**: Time (s)  
+- **u₀**: Carrying capacity (normalized to 1)  
+- **r₀**: Wound half-width (0.5 cm)  
+- **D**: Cell diffusivity (2.0 × 10⁻⁹ cm²/s)  
+- **p**: Nonlinear diffusion exponent (0, 1, or 5)  
+- **s_c**: Proliferation rate (0 or 8.0 × 10⁻⁶ s⁻¹) 
 
 ### Initial Condition
 
 $$
-u(r,0) = 0 \quad \text{for} \quad r > 0
+u(r, 0) = 0 \quad \text{for} \quad r > 0
 $$
 
 ### Boundary Conditions
 
-- **Dirichlet condition** at \( r=0 \): \( u(0,t) = u_0 = 1 \)
-- **Neumann condition** at \( r=r_0 \): \( \frac{\partial u}{\partial r}(r_0,t) = 0 \)
+$$
+u(0, t) = u_0 = 1 \quad \text{(Dirichlet)}
+$$
+
+$$
+\frac{\partial u}{\partial r}(r_0, t) = 0 \quad \text{(Neumann)}
+$$
+
 
 ---
 
-## Analytical Solution (Special Case: \( p = 0, \ s_c = 0 \))
+## Analytical Solution (Special Case: *p* = 0, *s_c* = 0)
 
-In this case, the PDE reduces to the heat equation:
+When *p* = 0 and *s_c* = 0, the PDE simplifies to the heat equation:
 
 $$
 \frac{\partial u}{\partial t} = D \frac{\partial^2 u}{\partial r^2}
 $$
 
-We decompose the solution as \( u(r,t) = u_s(r) + v(r,t) \), where \( u_s(r) = 1 \) is the steady-state solution. Then:
+### Solution Derivation
 
-- \( v(r,t) = u(r,t) - 1 \)
-- \( \frac{\partial v}{\partial t} = D \frac{\partial^2 v}{\partial r^2} \)
-- \( v(0,t) = 0 \)
-- \( \frac{\partial v}{\partial r}(r_0,t) = 0 \)
-- \( v(r,0) = -1 \)
-
-Using separation of variables, the eigenfunctions are:
+We decompose:
 
 $$
-R_m(r) = \sin\left( \frac{(2m-1)\pi r}{2r_0} \right), \quad \lambda_m = \frac{(2m-1)\pi}{2r_0}
+u(r, t) = u_s(r) + v(r, t)
 $$
 
-With time decay:
+where *u_s(r)* is the steady-state solution satisfying:
+
+$$
+D \frac{d^2 u_s}{dr^2} = 0, \quad u_s(0) = 1, \quad \frac{du_s}{dr}(r_0) = 0
+$$
+
+Solving gives:
+
+$$
+u_s(r) = 1
+$$
+
+Then *v(r, t) = u(r, t) - 1* satisfies:
+
+$$
+\frac{\partial v}{\partial t} = D \frac{\partial^2 v}{\partial r^2}, \quad v(0, t) = 0, \quad \frac{\partial v}{\partial r}(r_0, t) = 0, \quad v(r, 0) = -1
+$$
+
+Using separation of variables *v(r, t) = R(r) T(t)*:
+
+$$
+\frac{T'}{D T} = \frac{R''}{R} = -\lambda^2
+$$
+
+The spatial ODE:
+
+$$
+R'' + \lambda^2 R = 0
+$$
+
+with conditions:
+
+$$
+R(0) = 0, \quad R'(r_0) = 0
+$$
+
+has solutions:
+
+$$
+R_m(r) = \sin\left( \frac{(2m - 1) \pi r}{2 r_0} \right)
+$$
+
+$$
+\lambda_m = \frac{(2m - 1) \pi}{2 r_0}, \quad m = 1, 2, \dots
+$$
+
+The temporal solution is:
 
 $$
 T_m(t) = e^{-D \lambda_m^2 t}
 $$
 
-Fourier coefficients from \( v(r,0) = -1 \) yield:
+The general solution:
 
 $$
-c_m = -\frac{4}{(2m - 1)\pi}
+v(r, t) = \sum_{m=1}^{\infty} c_m e^{-D \lambda_m^2 t} \sin\left( \frac{(2m - 1) \pi r}{2 r_0} \right)
 $$
 
-### Final Analytical Solution:
+Applying the initial condition *v(r, 0) = -1*:
 
 $$
-u(r,t) = 1 - \sum_{m=1}^{\infty} \frac{4}{(2m-1)\pi} \exp\left(-D \left( \frac{(2m-1)\pi}{2r_0} \right)^2 t \right) \sin\left( \frac{(2m-1)\pi r}{2r_0} \right)
+-1 = \sum_{m=1}^{\infty} c_m \sin\left( \frac{(2m - 1) \pi r}{2 r_0} \right)
 $$
+
+The coefficients:
+
+$$
+c_m = -\frac{4}{(2m - 1) \pi}
+$$
+
+Thus, the complete solution is:
+
+$$
+\boxed{
+u(r, t) = 1 - \sum_{m=1}^{\infty} \frac{4}{(2m - 1) \pi} \exp\left( -D \left( \frac{(2m - 1) \pi}{2 r_0} \right)^2 t \right) 
+\sin\left( \frac{(2m - 1) \pi r}{2 r_0} \right)
+}
+$$
+
+
 
 ---
 
@@ -78,75 +141,99 @@ $$
 
 ### Explicit Finite Difference (Forward Euler)
 
-#### Discretization
-
-Time derivative:
+The expanded PDE is discretized as:
 
 $$
 \frac{\partial u}{\partial t} \approx \frac{u_i^{n+1} - u_i^n}{\Delta t}
 $$
 
-Spatial second derivative:
-
 $$
-\frac{\partial^2 u}{\partial r^2} \approx \frac{u_{i+1}^n - 2u_i^n + u_{i-1}^n}{(\Delta r)^2}
-$$
-
-Gradient squared (used in nonlinear term):
-
-$$
-\left( \frac{\partial u}{\partial r} \right)^2 \approx \left( \frac{u_{i+1}^n - u_{i-1}^n}{2\Delta r} \right)^2
+\frac{\partial^2 u}{\partial r^2} \approx \frac{u_{i+1}^n - 2u_i^n + u_{i-1}^n}{(\Delta r)^2}, \quad
+\left( \frac{\partial u}{\partial r} \right)^2 \approx \left( \frac{u_{i+1}^n - u_{i-1}^n}{2 \Delta r} \right)^2
 $$
 
-#### Update Rule
+The update equation for interior points ($i=2,\dots,N-1$) is:
+![Update equation](images/update_equation.pn)
 
-For interior points \( i = 2,\dots,N-1 \):
-
-$$
-\begin{aligned}
-u_i^{n+1} = u_i^n + \Delta t \bigg[ & D \Bigg( \left(1 - \frac{u_i^n}{u_0}\right)^p \frac{u_{i+1}^n - 2u_i^n + u_{i-1}^n}{(\Delta r)^2} \\
-& - \frac{p}{u_0} \left(1 - \frac{u_i^n}{u_0}\right)^{p-1} \left( \frac{u_{i+1}^n - u_{i-1}^n}{2\Delta r} \right)^2 \Bigg) \\
-& + s_c u_i^n \left(1 - \frac{u_i^n}{u_0} \right) \bigg]
-\end{aligned}
-$$
-
-#### Boundary Conditions
-
-- \( u_1^{n+1} = 1 \) (Dirichlet)
-- \( u_N^{n+1} = u_{N-1}^{n+1} \) (Neumann)
-
-#### Stability Condition
+Boundary conditions:
 
 $$
-\Delta t \leq \frac{(\Delta r)^2}{2D}
+u_1^{n+1} = 1 \quad (\text{Dirichlet})
 $$
+
+$$
+u_N^{n+1} = u_{N-1}^{n+1} \quad (\text{Neumann})
+$$
+
+Stability requires:
+
+$$
+\Delta t \le \frac{(\Delta r)^2}{2 D}
+$$
+
 
 ---
 
 ### Implicit Finite Difference (Backward Euler)
 
-Nonlinear update equation:
+Discretize at *t<sub>n+1</sub>*:
 
 $$
-\frac{u_i^{n+1} - u_i^n}{\Delta t} = D \left[ \left(1 - \frac{u_i^{n+1}}{u_0} \right)^p \frac{u_{i+1}^{n+1} - 2u_i^{n+1} + u_{i-1}^{n+1}}{(\Delta r)^2} - \frac{p}{u_0} \left(1 - \frac{u_i^{n+1}}{u_0} \right)^{p-1} \left( \frac{u_{i+1}^{n+1} - u_{i-1}^{n+1}}{2\Delta r} \right)^2 \right] + s_c u_i^{n+1} \left(1 - \frac{u_i^{n+1}}{u_0} \right)
+\begin{aligned}
+\frac{u_i^{n+1} - u_i^n}{\Delta t} = D \Bigg[
+& \left(1 - \frac{u_i^{n+1}}{u_0}\right)^p \frac{u_{i+1}^{n+1} - 2 u_i^{n+1} + u_{i-1}^{n+1}}{(\Delta r)^2} \\
+& - \frac{p}{u_0} \left(1 - \frac{u_i^{n+1}}{u_0}\right)^{p-1} \left( \frac{u_{i+1}^{n+1} - u_{i-1}^{n+1}}{2 \Delta r} \right)^2
+\Bigg] 
++ s_c u_i^{n+1} \left(1 - \frac{u_i^{n+1}}{u_0}\right)
+\end{aligned}
 $$
 
-This nonlinear system is solved via Newton-Raphson.
+This forms a nonlinear system:
+
+$$
+F_i(\mathbf{u}^{n+1}) = u_i^{n+1} - u_i^n - \Delta t \cdot \text{RHS}(\mathbf{u}^{n+1}) = 0
+$$
+
+Solved with Newton-Raphson:
+
+$$
+J(\mathbf{u}_k) \, \delta \mathbf{u} = -\mathbf{F}(\mathbf{u}_k), \quad \mathbf{u}_{k+1} = \mathbf{u}_k + \delta \mathbf{u}
+$$
+
+where 
+
+$$
+J_{ij} = \frac{\partial F_i}{\partial u_j^{n+1}}
+$$ 
+
+is the Jacobian.
 
 ---
 
 ### Crank-Nicolson Method
 
-Second-order accurate in time:
+Average explicit and implicit terms:
 
 $$
 \begin{aligned}
-\frac{u_i^{n+1} - u_i^n}{\Delta t} = \frac{1}{2} \Big[ & D \left( \left(1 - \frac{u_i^n}{u_0} \right)^p \frac{u_{i+1}^n - 2u_i^n + u_{i-1}^n}{(\Delta r)^2} - \frac{p}{u_0} \left(1 - \frac{u_i^n}{u_0} \right)^{p-1} \left( \frac{u_{i+1}^n - u_{i-1}^n}{2\Delta r} \right)^2 \right) \\
-& + s_c u_i^n \left(1 - \frac{u_i^n}{u_0} \right) \Big] + \text{same terms at } n+1
+\frac{u_i^{n+1} - u_i^n}{\Delta t} = \frac{1}{2} \Bigg[
+& D \Bigg( \left(1 - \frac{u_i^n}{u_0}\right)^p \frac{u_{i+1}^n - 2 u_i^n + u_{i-1}^n}{(\Delta r)^2}
+- \frac{p}{u_0} \left(1 - \frac{u_i^n}{u_0}\right)^{p-1}
+\left( \frac{u_{i+1}^n - u_{i-1}^n}{2 \Delta r} \right)^2
+\Bigg) \\
+& + s_c u_i^n \left(1 - \frac{u_i^n}{u_0}\right)
+\Bigg] \\
++ \frac{1}{2} \Bigg[
+& D \Bigg( \left(1 - \frac{u_i^{n+1}}{u_0}\right)^p \frac{u_{i+1}^{n+1} - 2 u_i^{n+1} + u_{i-1}^{n+1}}{(\Delta r)^2}
+- \frac{p}{u_0} \left(1 - \frac{u_i^{n+1}}{u_0}\right)^{p-1}
+\left( \frac{u_{i+1}^{n+1} - u_{i-1}^{n+1}}{2 \Delta r} \right)^2
+\Bigg) \\
+& + s_c u_i^{n+1} \left(1 - \frac{u_i^{n+1}}{u_0}\right)
+\Bigg]
 \end{aligned}
 $$
 
-Also solved with Newton-Raphson.
+Solved as a nonlinear system using Newton-Raphson. Second-order accurate and unconditionally stable.
 
 ---
 
