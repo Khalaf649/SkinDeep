@@ -23,7 +23,7 @@ python app.py
 
 ---
 
-## 👥 Team Members
+## 👥 Team Members 👥
 
 | Name                     | BN  |
 |--------------------------|------|
