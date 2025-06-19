@@ -54,6 +54,20 @@
             0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
             50% { transform: translateY(-20px) rotate(180deg); opacity: 0.8; }
         }
+        /* Add this to your style.css if needed */
+        .button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #0077cc;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+        }
+        .button:hover {
+        background-color: #005fa3;
+        }
+
 
         /* Header */
         header {
@@ -500,15 +514,17 @@
     </header>
 
     <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <ul>
-                <li><a href="#equations" onclick="scrollToSection('equations')">Equations & Parameters</a></li>
-                <li><a href="#analytical" onclick="scrollToSection('analytical')">Analytical Solutions</a></li>
-                <li><a href="#numerical" onclick="scrollToSection('numerical')">Numerical Solutions</a></li>
-            </ul>
-        </div>
-    </nav>
+<nav>
+    <div class="nav-container">
+        <ul>
+            <li><a href="#equations" onclick="scrollToSection('equations')">Equations & Parameters</a></li>
+            <li><a href="#analytical" onclick="scrollToSection('analytical')">Analytical Solutions</a></li>
+            <li><a href="#numerical" onclick="scrollToSection('numerical')">Numerical Solutions</a></li>
+            <li><a href="#numerical" onclick="scrollToSection('numerical')">Numerical Solutions</a></li>
+        </ul>
+    </div>
+</nav>
+
 
     <!-- Main content -->
     <div class="container">
@@ -841,6 +857,51 @@ M \frac{\mathbf{u}^{n+1} - \mathbf{u}^n}{\Delta t} + K(\mathbf{u}^{n+1}) \mathbf
   </div>
 </section>
 
+<section id="simulation" class="section fade-in">
+  <div class="math-content">
+    <h2>Simulation</h2>
+    <p>
+      Explore a detailed simulation of the model, showcasing its behavior under various conditions.
+    </p>
+    <a href="http://127.0.0.1:5000/" class="button">View Simulation</a>
+  </div>
+</section>
+
+<section id="about" class="section fade-in">
+    <div class="math-content">
+        <!-- Optional visuals or content -->
+    </div>
+    <h2>About Us</h2>
+    <p>
+        We are a team of passionate students and engineers dedicated to applying mathematical modeling, simulation, and numerical techniques
+        to solve real-world biomedical and engineering challenges.
+    </p>
+    <p><strong>Team Members:</strong></p>
+    <ul>
+        <li>
+            <a href="https://www.linkedin.com/in/abdelrahman-reda" target="_blank">Abdelrahman Reda</a> – Biomedical Engineering Student
+        </li>
+        <li>
+            <a href="https://www.linkedin.com/in/salma-alii/" target="_blank">Salma Ali</a> – Biomedical Engineering Student
+        </li>
+        <li>
+            <a href="https://www.linkedin.com/in/amira-yasser1/" target="_blank">Amira Yasser</a> – Biomedical Engineering Student
+        </li>
+        <li>
+            <a href="https://www.linkedin.com/in/menna-khalifa-9a368a195/" target="_blank">Menna Khalifa</a> – Biomedical Engineering Student
+        </li>
+        <li>
+            <a href="https://www.linkedin.com/in/amro-fekry-3686bb192/" target="_blank">Amro Fekry</a> – Biomedical Engineering Student
+        </li>
+        <li>
+            <a href="https://www.linkedin.com/in/alhussien-ayman-488336249/" target="_blank">Alhussien Ayman</a> – Biomedical Engineering Student
+        </li>
+    </ul>
+</section>
+
+
+
+
     </div>
 
     <!-- Floating Action Button -->
@@ -866,25 +927,25 @@ M \frac{\mathbf{u}^{n+1} - \mathbf{u}^n}{\Delta t} + K(\mathbf{u}^{n+1}) \mathbf
         }
 
         // Smooth scrolling to sections
-        function scrollToSection(sectionId) {
-            const element = document.getElementById(sectionId);
-            const headerHeight = document.querySelector('header').offsetHeight + 
-                               document.querySelector('nav').offsetHeight;
-            const elementPosition = element.offsetTop - headerHeight - 20;
-            
-            window.scrollTo({
-                top: elementPosition,
-                behavior: 'smooth'
-            });
-        }
+         function scrollToSection(sectionId) {
+        const element = document.getElementById(sectionId);
+        const headerHeight = (document.querySelector('header')?.offsetHeight || 0) + 
+                             (document.querySelector('nav')?.offsetHeight || 0);
+        const elementPosition = element.offsetTop - headerHeight - 20;
 
-        // Scroll to top
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
+        window.scrollTo({
+            top: elementPosition,
+            behavior: 'smooth'
+        });
+    }
+
+    // Scroll to top
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
 
         // Fade in animation on scroll
         function handleScrollAnimations() {
