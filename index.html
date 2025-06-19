@@ -1,492 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PDE Solutions for Epidermal Wound Healing</title>
+    <link rel="stylesheet" href="style.css">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script>
         window.MathJax = {
             tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']]
-            }
+                inlineMath: [
+                    ["$", "$"],
+                    ["\\(", "\\)"],
+                ],
+                displayMath: [
+                    ["$$", "$$"],
+                    ["\\[", "\\]"],
+                ],
+            },
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #2c3e50;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* Animated background particles */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
-            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.8; }
-        }
-
-        /* Header */
-        header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(15px);
-            padding: 2rem 0;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        h1 {
-            font-size: 3rem;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
-            animation: titleGlow 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes titleGlow {
-            from { filter: drop-shadow(0 0 5px rgba(102, 126, 234, 0.3)); }
-            to { filter: drop-shadow(0 0 15px rgba(118, 75, 162, 0.5)); }
-        }
-
-        .subtitle {
-            font-size: 1.3rem;
-            color: #7f8c8d;
-            font-weight: 300;
-        }
-
-        /* Navigation */
-        nav {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            padding: 1rem 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: #2c3e50;
-            font-weight: 600;
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        nav a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            transition: left 0.3s ease;
-            z-index: -1;
-        }
-
-        nav a:hover::before {
-            left: 0;
-        }
-
-        nav a:hover {
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Main container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        /* Section styling */
-        .section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(15px);
-            border-radius: 20px;
-            padding: 3rem;
-            margin-bottom: 3rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
-            animation: slideInUp 0.8s ease-out;
-        }
-
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-        }
-
-        .section h2 {
-            font-size: 2.5rem;
-            color: #2c3e50;
-            margin-bottom: 2rem;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            border-radius: 2px;
-        }
-
-        .section h3 {
-            font-size: 1.8rem;
-            color: #34495e;
-            margin: 2rem 0 1rem 0;
-            position: relative;
-            padding-left: 1rem;
-        }
-
-        .section h3::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(180deg, #667eea, #764ba2);
-            border-radius: 2px;
-        }
-
-        /* Equation boxes */
-        .equation-box {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border: 2px solid #dee2e6;
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 2rem 0;
-            text-align: center;
-            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .equation-box::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(102, 126, 234, 0.1), transparent);
-            animation: shimmer 3s linear infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-
-        /* Parameter controls */
-        .parameter-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .parameter-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .parameter-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-        }
-
-        .parameter-card h4 {
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .parameter-icon {
-            width: 24px;
-            height: 24px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        /* Interactive sliders */
-        .slider-container {
-            margin: 1.5rem 0;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1.5rem;
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
-        }
-
-        .slider-container label {
-            display: block;
-            margin-bottom: 1rem;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .slider {
-            width: 100%;
-            height: 8px;
-            border-radius: 4px;
-            background: rgba(255, 255, 255, 0.3);
-            outline: none;
-            -webkit-appearance: none;
-            position: relative;
-        }
-
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: white;
-            cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            transition: all 0.2s ease;
-        }
-
-        .slider::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .slider::-moz-range-thumb {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: white;
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .value-display {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            display: inline-block;
-            margin-top: 0.5rem;
-            font-weight: bold;
-            min-width: 80px;
-            text-align: center;
-        }
-
-        /* Info boxes */
-        .info-box {
-            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-            border-left: 5px solid #2196f3;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border-radius: 0 15px 15px 0;
-            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.1);
-        }
-
-        .warning-box {
-            background: linear-gradient(135deg, #fff3e0 0%, #ffcc02 20%);
-            border-left: 5px solid #ff9800;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border-radius: 0 15px 15px 0;
-            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.1);
-        }
-
-        /* Empty sections styling */
-        .empty-section {
-            text-align: center;
-            padding: 4rem 2rem;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border: 2px dashed #dee2e6;
-            border-radius: 15px;
-            margin: 2rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .empty-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
-            animation: slideRight 2s ease-in-out infinite;
-        }
-
-        @keyframes slideRight {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        .empty-icon {
-            font-size: 4rem;
-            color: #bdc3c7;
-            margin-bottom: 1rem;
-        }
-
-        .empty-text {
-            font-size: 1.2rem;
-            color: #7f8c8d;
-            font-style: italic;
-        }
-
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            nav ul {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .section {
-                padding: 2rem;
-            }
-            
-            .parameter-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .section h2 {
-                font-size: 2rem;
-            }
-        }
-
-        /* Scroll animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Floating action button */
-        .fab {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
-
-        .fab:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
-        }
-    </style>
 </head>
+
 <body>
     <!-- Animated background particles -->
     <div class="particles" id="particles"></div>
@@ -495,7 +32,9 @@
     <header>
         <div class="header-content">
             <h1>PDE Solutions for Epidermal Wound Healing</h1>
-            <p class="subtitle">Mathematical Modeling of Biological Tissue Regeneration</p>
+            <p class="subtitle">
+                Mathematical Modeling of Biological Tissue Regeneration
+            </p>
         </div>
     </header>
 
@@ -503,9 +42,15 @@
     <nav>
         <div class="nav-container">
             <ul>
-                <li><a href="#equations" onclick="scrollToSection('equations')">Equations & Parameters</a></li>
-                <li><a href="#analytical" onclick="scrollToSection('analytical')">Analytical Solutions</a></li>
-                <li><a href="#numerical" onclick="scrollToSection('numerical')">Numerical Solutions</a></li>
+                <li>
+                    <a href="#equations" onclick="scrollToSection('equations')">Equations & Parameters</a>
+                </li>
+                <li>
+                    <a href="#analytical" onclick="scrollToSection('analytical')">Analytical Solutions</a>
+                </li>
+                <li>
+                    <a href="#numerical" onclick="scrollToSection('numerical')">Numerical Solutions</a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -513,459 +58,385 @@
     <!-- Main content -->
     <div class="container">
         <!-- Equations and Parameters Section -->
-   <section id="equations" class="section fade-in">
-    <h2>Equations & Parameters</h2>
-
-    <h3>Fundamental PDE Model</h3>
-    <p>The epidermal wound healing process can be modeled using a system of reaction-diffusion equations that describe the spatiotemporal dynamics of cell density, growth factors, and extracellular matrix components.</p>
-
-    <div class="equation-box">
-        <h4>Nonlinear Reaction-Diffusion Equation</h4>
-       $$
-\frac{\partial u}{\partial t} = D \frac{\partial}{\partial r} \left( \left(1 - \frac{u}{u_0}\right)^p \frac{\partial u}{\partial r} \right) + s_c u \left(1 - \frac{u}{u_0}\right)
-$$
-    </div>
-
-<div class="info-box">
-    <strong>Where:</strong>
-    <ul>
-        <li><strong>u(r,t)</strong> is the epithelial cell density,</li>
-        <li><strong>r</strong> is the position across the wound,</li>
-        <li><strong>t</strong> is time,</li>
-        <li><strong>D</strong> is the cell diffusivity,</li>
-        <li><strong>u<sub>0</sub></strong> is the normal (unwounded) cell density,</li>
-        <li><strong>p</strong> controls the nonlinearity of diffusion,</li>
-        <li><strong>s<sub>c</sub></strong> is the cell proliferation rate.</li>
-    </ul>
-</div>
-
-
-
-
-  
-
-  
-
-
- 
-
-    <h3>Boundary and Initial Conditions</h3>
-
-    <div class="equation-box">
-        <h4>Initial Conditions</h4>
-        \[
-        u(r, 0) = 0, \quad 0 \leq r \leq r_0
-        \]
-        Initially, no epithelial cells are present in the wound.
-    </div>
-
-    <div class="equation-box">
-        <h4>Boundary Conditions</h4>
-       \[
-        u(0, t) = u_0 = 1, \quad \frac{\partial u}{\partial r} (r_0, t) = 0
-        \]
-        At the wound edge, the cell density is normal. At the center, there is no net cell flow (symmetry condition).
-    </div>
-
-
-</section>
-
-
-   <section id="analytical" class="section fade-in">
-    <h2>Analytical Solutions</h2>
-
-    <div class="equation-box">
-        <h4>Special Case: \( p = 0 \), \( s_c = 0 \)</h4>
-        <p>When \( p = 0 \) and \( s_c = 0 \), the PDE reduces to the heat equation:</p>
-        $$\frac{\partial u}{\partial t} = D \frac{\partial^2 u}{\partial r^2}$$
-
-        <h4>Solution Derivation</h4>
-        <p>We decompose \( u(r,t) = u_s(r) + v(r,t) \), where \( u_s(r) \) is the steady-state solution satisfying:</p>
-        $$D \frac{d^2 u_s}{dr^2} = 0, \quad u_s(0) = 1, \quad \frac{du_s}{dr}(r_0) = 0$$
-        <p>Solving this gives \( u_s(r) = 1 \). Thus \( v(r,t) = u(r,t) - 1 \) satisfies:</p>
-        $$\frac{\partial v}{\partial t} = D \frac{\partial^2 v}{\partial r^2}, \quad v(0,t) = 0, \quad \frac{\partial v}{\partial r}(r_0,t) = 0, \quad v(r,0) = -1$$
-
-        <p>Using separation of variables \( v(r,t) = R(r)T(t) \):</p>
-        $$\frac{T'}{DT} = \frac{R''}{R} = -\lambda^2$$
-
-        <p>The spatial ODE with boundary conditions yields:</p>
-        $$R_m(r) = \sin\left( \frac{(2m-1)\pi r}{2r_0} \right), \quad \lambda_m = \frac{(2m-1)\pi}{2r_0}, \quad m = 1, 2, \dots$$
-        $$T_m(t) = e^{-D \lambda_m^2 t}$$
-
-        <p>Thus the general solution becomes:</p>
-        $$v(r,t) = \sum_{m=1}^{\infty} c_m e^{-D\lambda_m^2 t} \sin\left( \frac{(2m-1)\pi r}{2r_0} \right)$$
-
-        <p>Applying the initial condition \( v(r,0) = -1 \):</p>
-        $$-1 = \sum_{m=1}^{\infty} c_m \sin\left( \frac{(2m-1)\pi r}{2r_0} \right)$$
-        $$c_m = -\frac{4}{(2m-1)\pi}$$
-
-        <p>Finally, the complete analytical solution is:</p>
-        $$\boxed{u(r,t) = 1 - \sum_{m=1}^{\infty} \frac{4}{(2m-1)\pi} \exp\left(-D \left( \frac{(2m-1)\pi}{2r_0} \right)^2 t \right) \sin\left( \frac{(2m-1)\pi r}{2r_0} \right)}$$
-    </div>
-</section>
-
-
-    <!-- Numerical Solutions Section -->
-<section id="numerical" class="section fade-in">
-  <h2>Numerical Solutions</h2>
-  <div class="math-content">
-  <h3>Explicit Finite Difference (Forward Euler)</h3>
-<p>The expanded PDE is discretized as:</p>
-<p>
-  \[
-  \frac{\partial u}{\partial t} \approx \frac{u_i^{n+1} - u_i^n}{\Delta t}
-  \]
-  \[
-  \frac{\partial^2 u}{\partial r^2} \approx \frac{u_{i+1}^n - 2u_i^n + u_{i-1}^n}{(\Delta r)^2}, \quad
-  \left( \frac{\partial u}{\partial r} \right)^2 \approx \left( \frac{u_{i+1}^n - u_{i-1}^n}{2\Delta r} \right)^2
-  \]
-</p>
-
-<p>The update equation for interior points \(i = 2, \dots, N-1\) is:</p>
-<p>
-  \[
-  \begin{aligned}
-  u_i^{n+1} = u_i^n + \Delta t \bigg[
-  D \bigg(
-  \underbrace{\left(1 - \frac{u_i^n}{u_0}\right)^p 
-  \frac{u_{i+1}^n - 2u_i^n + u_{i-1}^n}{(\Delta r)^2}}_{\text{Diffusion}} 
-  - \underbrace{\frac{p}{u_0} \left(1 - \frac{u_i^n}{u_0}\right)^{p-1} 
-  \left( \frac{u_{i+1}^n - u_{i-1}^n}{2 \Delta r} \right)^2}_{\text{Nonlinear flux}}
-  \bigg) + \underbrace{s_c u_i^n \left(1 - \frac{u_i^n}{u_0}\right)}_{\text{Source}}
-  \bigg]
-  \end{aligned}
-  \]
-</p>
-
-<p>Boundary conditions:</p>
-<p>
-  \[
-  \begin{aligned}
-  u_1^{n+1} &= 1 \quad \text{(Dirichlet)} \\
-  u_N^{n+1} &= u_{N-1}^{n+1} \quad \text{(Neumann)}
-  \end{aligned}
-  \]
-</p>
-
-<p>Stability requires:</p>
-<p>
-  \[
-  \Delta t \leq \frac{(\Delta r)^2}{2D}
-  \]
-</p>
-
-
-   <h3>Implicit Finite Difference (Backward Euler)</h3>
-
-<p>Discretize at \( t_{n+1} \):</p>
-
-<p>
-\[
-\begin{aligned}
-\frac{u_i^{n+1} - u_i^n}{\Delta t} = D \bigg[
-&\left(1 - \frac{u_i^{n+1}}{u_0}\right)^p 
-\frac{u_{i+1}^{n+1} - 2u_i^{n+1} + u_{i-1}^{n+1}}{(\Delta r)^2} \\
-&- \frac{p}{u_0} 
-\left(1 - \frac{u_i^{n+1}}{u_0}\right)^{p-1}
-\left( \frac{u_{i+1}^{n+1} - u_{i-1}^{n+1}}{2 \Delta r} \right)^2
-\bigg] \\
-&+ s_c u_i^{n+1} \left(1 - \frac{u_i^{n+1}}{u_0}\right)
-\end{aligned}
-\]
-</p>
-
-<p>This forms a nonlinear system:</p>
-
-<p>
-\[
-F_i(\mathbf{u}^{n+1}) = u_i^{n+1} - u_i^n - \Delta t \cdot \text{RHS}(\mathbf{u}^{n+1}) = 0
-\]
-</p>
-
-<p>Solved with Newton-Raphson:</p>
-
-<p>
-\[
-J(\mathbf{u}_k) \delta \mathbf{u} = -\mathbf{F}(\mathbf{u}_k), \quad \mathbf{u}_{k+1} = \mathbf{u}_k + \delta \mathbf{u}
-\]
-</p>
-
-<p>where \( J_{ij} = \partial F_i/\partial u_j^{n+1} \) is the Jacobian.</p>
-
-
-    <h3>Crank-Nicolson Method</h3>
-    Average explicit and implicit terms:
-    <p>
-      \[
-      \begin{aligned}
-      \frac{u_i^{n+1} - u_i^n}{\Delta t} = \frac{1}{2} \Big[ & D \left( \left(1 - \frac{u_i^n}{u_0}\right)^p \frac{u_{i+1}^n - 2u_i^n + u_{i-1}^n}{(\Delta r)^2} - \frac{p}{u_0} \left(1 - \frac{u_i^n}{u_0}\right)^{p-1} \left( \frac{u_{i+1}^n - u_{i-1}^n}{2\Delta r} \right)^2 \right) \\
-      + & s_c u_i^n \left(1 - \frac{u_i^n}{u_0}\right) \Big] \\
-      + \frac{1}{2} \Big[ & D \left( \left(1 - \frac{u_i^{n+1}}{u_0}\right)^p \frac{u_{i+1}^{n+1} - 2u_i^{n+1} + u_{i-1}^{n+1}}{(\Delta r)^2} - \frac{p}{u_0} \left(1 - \frac{u_i^{n+1}}{u_0}\right)^{p-1} \left( \frac{u_{i+1}^{n+1} - u_{i-1}^{n+1}}{2\Delta r} \right)^2 \right) \\
-      + & s_c u_i^{n+1} \left(1 - \frac{u_i^{n+1}}{u_0}\right) \Big]
-      \end{aligned}
-      \]
-    </p>
-    Solved as a nonlinear system using Newton-Raphson. Second-order accurate and unconditionally stable.
-
- <h3>Method of Lines (MOL)</h3>
-
-<p>The Method of Lines discretizes spatial derivatives to convert the PDE into a system of ODEs.</p>
-
-<h4>Spatial Discretization</h4>
-
-<p>Define grid points \( r_i = (i-1)\Delta r \) with \( \Delta r = \frac{r_0}{N-1} \). Let \( u_i(t) = u(r_i, t) \).</p>
-
-<p>For interior points (\( i=2,\dots,N-1 \)):</p>
-
-<p>
-\[
-\frac{du_i}{dt} = D \left[ \left(1 - \frac{u_i}{u_0}\right)^p \frac{u_{i+1} - 2u_i + u_{i-1}}{(\Delta r)^2} - \frac{p}{u_0} \left(1 - \frac{u_i}{u_0}\right)^{p-1} \left( \frac{u_{i+1} - u_{i-1}}{2\Delta r} \right)^2 \right] + s_c u_i \left(1 - \frac{u_i}{u_0}\right)
-\]
-</p>
-
-<h4>Boundary Conditions</h4>
-<ul>
-  <li><strong>Dirichlet at</strong> \( r=0 \) (\( i=1 \)): 
-    <p>
-    \[
-    u_1(t) = 1 \implies \frac{du_1}{dt} = 0
-    \]
-    </p>
-  </li>
-  <li><strong>Neumann at</strong> \( r=r_0 \) (\( i=N \)): Using ghost point \( u_{N+1} \):
-    <p>
-    \[
-    \frac{u_{N+1} - u_{N-1}}{2\Delta r} = 0 \implies u_{N+1} = u_{N-1}
-    \]
-    </p>
-    <p>
-    Then:
-    \[
-    \frac{du_N}{dt} = D \left(1 - \frac{u_N}{u_0}\right)^p \frac{2(u_{N-1} - u_N)}{(\Delta r)^2} + s_c u_N \left(1 - \frac{u_N}{u_0}\right)
-    \]
-    </p>
-  </li>
-</ul>
-
-<h4>Initial Conditions</h4>
-
-<p>
-\[
-u_i(0) = \begin{cases} 
-1 & i=1 \\
-0 & i=2,\dots,N 
-\end{cases}
-\]
-</p>
-
-<h4>Time Integration</h4>
-
-<p>Solve the ODE system:</p>
-
-<p>
-\[
-\frac{d\mathbf{u}}{dt} = \mathbf{F}(t, \mathbf{u}), \quad \mathbf{u}(0) = \mathbf{u}_0
-\]
-</p>
-
-<p>using a stiff ODE solver (e.g., BDF method).</p>
-
-
-    <h3>Finite Element Method (FEM)</h3>
-
-<h4>Weak Form Derivation</h4>
-<p>Multiply by test function \( v(r) \) with \( v(0) = 0 \):</p>
-<p>
-\[
-\int_0^{r_0} \frac{\partial u}{\partial t} v \, dr = \int_0^{r_0} \left[ D \frac{\partial}{\partial r} \left( \left(1 - \frac{u}{u_0}\right)^p \frac{\partial u}{\partial r} \right) + s_c u \left(1 - \frac{u}{u_0}\right) \right] v \, dr
-\]
-</p>
-
-<p>Integrate diffusion term by parts:</p>
-<p>
-\[
-\int_0^{r_0} D \frac{\partial}{\partial r} \left( \left(1 - \frac{u}{u_0}\right)^p \frac{\partial u}{\partial r} \right) v \, dr = \left[ D \left(1 - \frac{u}{u_0}\right)^p \frac{\partial u}{\partial r} v \right]_0^{r_0} - \int_0^{r_0} D \left(1 - \frac{u}{u_0}\right)^p \frac{\partial u}{\partial r} \frac{\partial v}{\partial r} \, dr
-\]
-</p>
-
-<p>Boundary term vanishes due to \( v(0) = 0 \) and \( \frac{\partial u}{\partial r}(r_0) = 0 \), yielding:</p>
-<p>
-\[
-\boxed{
-\int_0^{r_0} \frac{\partial u}{\partial t} v \, dr + \int_0^{r_0} D \left(1 - \frac{u}{u_0}\right)^p \frac{\partial u}{\partial r} \frac{\partial v}{\partial r} \, dr = \int_0^{r_0} s_c u \left(1 - \frac{u}{u_0}\right) v \, dr
-}
-\]
-</p>
-
-<h4>Spatial Discretization</h4>
-<p>Discretize domain \( [0, r_0] \) into \( N \) nodes with piecewise linear basis functions \( \phi_j(r) \). Approximate solution:</p>
-<p>
-\[
-u_h(r, t) = \phi_1(r) + \sum_{j=2}^N u_j(t) \phi_j(r)
-\]
-</p>
-<p>where \( u_1(t) = 1 \) (Dirichlet condition).</p>
-
-<h4>Semidiscrete System</h4>
-<p>For test functions \( v = \phi_i \) (\( i = 2, \dots, N \)):</p>
-<p>
-\[
-\sum_{j=2}^N \frac{du_j}{dt} \underbrace{\int_0^{r_0} \phi_i \phi_j \, dr}_{M_{ij}} + \sum_{j=2}^N u_j(t) \underbrace{\int_0^{r_0} D \left(1 - \frac{u_h}{u_0}\right)^p \frac{d\phi_i}{dr} \frac{d\phi_j}{dr} \, dr}_{K_{ij}(u)} = \underbrace{\int_0^{r_0} s_c u_h \left(1 - \frac{u_h}{u_0}\right) \phi_i \, dr}_{f_i(u)}
-\]
-</p>
-
-<p>Resulting in:</p>
-<p>
-\[
-M \frac{d\mathbf{u}}{dt} + K(\mathbf{u}) \mathbf{u} = \mathbf{f}(\mathbf{u})
-\]
-</p>
-<p>where \( \mathbf{u} = [u_2, \dots, u_N]^T \).</p>
-
-<h4>Time Discretization (Backward Euler)</h4>
-<p>
-\[
-M \frac{\mathbf{u}^{n+1} - \mathbf{u}^n}{\Delta t} + K(\mathbf{u}^{n+1}) \mathbf{u}^{n+1} = \mathbf{f}(\mathbf{u}^{n+1})
-\]
-</p>
-
-<p>Rearrange to nonlinear system:</p>
-<p>
-\[
-\mathbf{G}(\mathbf{u}^{n+1}) = M \mathbf{u}^{n+1} + \Delta t  K(\mathbf{u}^{n+1}) \mathbf{u}^{n+1} - \Delta t  \mathbf{f}(\mathbf{u}^{n+1}) - M \mathbf{u}^n = \mathbf{0}
-\]
-</p>
-
-<p>Solved with Newton-Raphson method.</p>
-
-  </div>
-</section>
-
+        <section id="equations" class="section fade-in">
+            <h2>Equations & Parameters</h2>
+
+            <h3>Fundamental PDE Model</h3>
+            <p>
+                The epidermal wound healing process can be modeled using a system of
+                reaction-diffusion equations that describe the spatiotemporal dynamics
+                of cell density, growth factors, and extracellular matrix components.
+            </p>
+
+            <div class="equation-box">
+                <h4>Nonlinear Reaction-Diffusion Equation</h4>
+                $$ \frac{\partial u}{\partial t} = D \frac{\partial}{\partial r}
+                \left( \left(1 - \frac{u}{u_0}\right)^p \frac{\partial u}{\partial r}
+                \right) + s_c u \left(1 - \frac{u}{u_0}\right) $$
+            </div>
+
+            <div class="info-box">
+                <strong>Where:</strong>
+                <ul>
+                    <li><strong>u(r,t)</strong> is the epithelial cell density,</li>
+                    <li><strong>r</strong> is the position across the wound,</li>
+                    <li><strong>t</strong> is time,</li>
+                    <li><strong>D</strong> is the cell diffusivity,</li>
+                    <li>
+                        <strong>u<sub>0</sub></strong> is the normal (unwounded) cell
+                        density,
+                    </li>
+                    <li><strong>p</strong> controls the nonlinearity of diffusion,</li>
+                    <li>
+                        <strong>s<sub>c</sub></strong> is the cell proliferation rate.
+                    </li>
+                </ul>
+            </div>
+
+            <h3>Boundary and Initial Conditions</h3>
+
+            <div class="equation-box">
+                <h4>Initial Conditions</h4>
+                \[ u(r, 0) = 0, \quad 0 \leq r \leq r_0 \] Initially, no epithelial
+                cells are present in the wound.
+            </div>
+
+            <div class="equation-box">
+                <h4>Boundary Conditions</h4>
+                \[ u(0, t) = u_0 = 1, \quad \frac{\partial u}{\partial r} (r_0, t) = 0
+                \] At the wound edge, the cell density is normal. At the center, there
+                is no net cell flow (symmetry condition).
+            </div>
+        </section>
+
+        <section id="analytical" class="section fade-in">
+            <h2>Analytical Solutions</h2>
+
+            <div class="equation-box">
+                <h4>Special Case: \( p = 0 \), \( s_c = 0 \)</h4>
+                <p>
+                    When \( p = 0 \) and \( s_c = 0 \), the PDE reduces to the heat
+                    equation:
+                </p>
+                $$\frac{\partial u}{\partial t} = D \frac{\partial^2 u}{\partial
+                r^2}$$
+
+                <h4>Solution Derivation</h4>
+                <p>
+                    We decompose \( u(r,t) = u_s(r) + v(r,t) \), where \( u_s(r) \) is
+                    the steady-state solution satisfying:
+                </p>
+                $$D \frac{d^2 u_s}{dr^2} = 0, \quad u_s(0) = 1, \quad
+                \frac{du_s}{dr}(r_0) = 0$$
+                <p>
+                    Solving this gives \( u_s(r) = 1 \). Thus \( v(r,t) = u(r,t) - 1 \)
+                    satisfies:
+                </p>
+                $$\frac{\partial v}{\partial t} = D \frac{\partial^2 v}{\partial r^2},
+                \quad v(0,t) = 0, \quad \frac{\partial v}{\partial r}(r_0,t) = 0,
+                \quad v(r,0) = -1$$
+
+                <p>Using separation of variables \( v(r,t) = R(r)T(t) \):</p>
+                $$\frac{T'}{DT} = \frac{R''}{R} = -\lambda^2$$
+
+                <p>The spatial ODE with boundary conditions yields:</p>
+                $$R_m(r) = \sin\left( \frac{(2m-1)\pi r}{2r_0} \right), \quad
+                \lambda_m = \frac{(2m-1)\pi}{2r_0}, \quad m = 1, 2, \dots$$ $$T_m(t) =
+                e^{-D \lambda_m^2 t}$$
+
+                <p>Thus the general solution becomes:</p>
+                $$v(r,t) = \sum_{m=1}^{\infty} c_m e^{-D\lambda_m^2 t} \sin\left(
+                \frac{(2m-1)\pi r}{2r_0} \right)$$
+
+                <p>Applying the initial condition \( v(r,0) = -1 \):</p>
+                $$-1 = \sum_{m=1}^{\infty} c_m \sin\left( \frac{(2m-1)\pi r}{2r_0}
+                \right)$$ $$c_m = -\frac{4}{(2m-1)\pi}$$
+
+                <p>Finally, the complete analytical solution is:</p>
+                $$\boxed{u(r,t) = 1 - \sum_{m=1}^{\infty} \frac{4}{(2m-1)\pi}
+                \exp\left(-D \left( \frac{(2m-1)\pi}{2r_0} \right)^2 t \right)
+                \sin\left( \frac{(2m-1)\pi r}{2r_0} \right)}$$
+            </div>
+        </section>
+
+        <!-- Numerical Solutions Section -->
+        <section id="numerical" class="section fade-in">
+            <h2>Numerical Solutions</h2>
+            <div class="math-content">
+                <h3>Explicit Finite Difference (Forward Euler)</h3>
+                <p>The expanded PDE is discretized as:</p>
+                <p>
+                    \[ \frac{\partial u}{\partial t} \approx \frac{u_i^{n+1} -
+                    u_i^n}{\Delta t} \] \[ \frac{\partial^2 u}{\partial r^2} \approx
+                    \frac{u_{i+1}^n - 2u_i^n + u_{i-1}^n}{(\Delta r)^2}, \quad \left(
+                    \frac{\partial u}{\partial r} \right)^2 \approx \left(
+                    \frac{u_{i+1}^n - u_{i-1}^n}{2\Delta r} \right)^2 \]
+                </p>
+
+                <p>
+                    The update equation for interior points \(i = 2, \dots, N-1\) is:
+                </p>
+                <p>
+                    \[ \begin{aligned} u_i^{n+1} = u_i^n + \Delta t \bigg[ D \bigg(
+                    \underbrace{\left(1 - \frac{u_i^n}{u_0}\right)^p \frac{u_{i+1}^n -
+                    2u_i^n + u_{i-1}^n}{(\Delta r)^2}}_{\text{Diffusion}} -
+                    \underbrace{\frac{p}{u_0} \left(1 - \frac{u_i^n}{u_0}\right)^{p-1}
+                    \left( \frac{u_{i+1}^n - u_{i-1}^n}{2 \Delta r}
+                    \right)^2}_{\text{Nonlinear flux}} \bigg) + \underbrace{s_c u_i^n
+                    \left(1 - \frac{u_i^n}{u_0}\right)}_{\text{Source}} \bigg]
+                    \end{aligned} \]
+                </p>
+
+                <p>Boundary conditions:</p>
+                <p>
+                    \[ \begin{aligned} u_1^{n+1} &= 1 \quad \text{(Dirichlet)} \\
+                    u_N^{n+1} &= u_{N-1}^{n+1} \quad \text{(Neumann)} \end{aligned} \]
+                </p>
+
+                <p>Stability requires:</p>
+                <p>\[ \Delta t \leq \frac{(\Delta r)^2}{2D} \]</p>
+
+                <h3>Implicit Finite Difference (Backward Euler)</h3>
+
+                <p>Discretize at \( t_{n+1} \):</p>
+
+                <p>
+                    \[ \begin{aligned} \frac{u_i^{n+1} - u_i^n}{\Delta t} = D \bigg[
+                    &\left(1 - \frac{u_i^{n+1}}{u_0}\right)^p \frac{u_{i+1}^{n+1} -
+                    2u_i^{n+1} + u_{i-1}^{n+1}}{(\Delta r)^2} \\ &- \frac{p}{u_0}
+                    \left(1 - \frac{u_i^{n+1}}{u_0}\right)^{p-1} \left(
+                    \frac{u_{i+1}^{n+1} - u_{i-1}^{n+1}}{2 \Delta r} \right)^2 \bigg] \\
+                    &+ s_c u_i^{n+1} \left(1 - \frac{u_i^{n+1}}{u_0}\right)
+                    \end{aligned} \]
+                </p>
+
+                <p>This forms a nonlinear system:</p>
+
+                <p>
+                    \[ F_i(\mathbf{u}^{n+1}) = u_i^{n+1} - u_i^n - \Delta t \cdot
+                    \text{RHS}(\mathbf{u}^{n+1}) = 0 \]
+                </p>
+
+                <p>Solved with Newton-Raphson:</p>
+
+                <p>
+                    \[ J(\mathbf{u}_k) \delta \mathbf{u} = -\mathbf{F}(\mathbf{u}_k),
+                    \quad \mathbf{u}_{k+1} = \mathbf{u}_k + \delta \mathbf{u} \]
+                </p>
+
+                <p>
+                    where \( J_{ij} = \partial F_i/\partial u_j^{n+1} \) is the
+                    Jacobian.
+                </p>
+
+                <h3>Crank-Nicolson Method</h3>
+                Average explicit and implicit terms:
+                <p>
+                    \[ \begin{aligned} \frac{u_i^{n+1} - u_i^n}{\Delta t} = \frac{1}{2}
+                    \Big[ & D \left( \left(1 - \frac{u_i^n}{u_0}\right)^p
+                    \frac{u_{i+1}^n - 2u_i^n + u_{i-1}^n}{(\Delta r)^2} - \frac{p}{u_0}
+                    \left(1 - \frac{u_i^n}{u_0}\right)^{p-1} \left( \frac{u_{i+1}^n -
+                    u_{i-1}^n}{2\Delta r} \right)^2 \right) \\ + & s_c u_i^n \left(1 -
+                    \frac{u_i^n}{u_0}\right) \Big] \\ + \frac{1}{2} \Big[ & D \left(
+                    \left(1 - \frac{u_i^{n+1}}{u_0}\right)^p \frac{u_{i+1}^{n+1} -
+                    2u_i^{n+1} + u_{i-1}^{n+1}}{(\Delta r)^2} - \frac{p}{u_0} \left(1 -
+                    \frac{u_i^{n+1}}{u_0}\right)^{p-1} \left( \frac{u_{i+1}^{n+1} -
+                    u_{i-1}^{n+1}}{2\Delta r} \right)^2 \right) \\ + & s_c u_i^{n+1}
+                    \left(1 - \frac{u_i^{n+1}}{u_0}\right) \Big] \end{aligned} \]
+                </p>
+                Solved as a nonlinear system using Newton-Raphson. Second-order
+                accurate and unconditionally stable.
+
+                <h3>Method of Lines (MOL)</h3>
+
+                <p>
+                    The Method of Lines discretizes spatial derivatives to convert the
+                    PDE into a system of ODEs.
+                </p>
+
+                <h4>Spatial Discretization</h4>
+
+                <p>
+                    Define grid points \( r_i = (i-1)\Delta r \) with \( \Delta r =
+                    \frac{r_0}{N-1} \). Let \( u_i(t) = u(r_i, t) \).
+                </p>
+
+                <p>For interior points (\( i=2,\dots,N-1 \)):</p>
+
+                <p>
+                    \[ \frac{du_i}{dt} = D \left[ \left(1 - \frac{u_i}{u_0}\right)^p
+                    \frac{u_{i+1} - 2u_i + u_{i-1}}{(\Delta r)^2} - \frac{p}{u_0}
+                    \left(1 - \frac{u_i}{u_0}\right)^{p-1} \left( \frac{u_{i+1} -
+                    u_{i-1}}{2\Delta r} \right)^2 \right] + s_c u_i \left(1 -
+                    \frac{u_i}{u_0}\right) \]
+                </p>
+
+                <h4>Boundary Conditions</h4>
+                <ul>
+                    <li>
+                        <strong>Dirichlet at</strong> \( r=0 \) (\( i=1 \)):
+                        <p>\[ u_1(t) = 1 \implies \frac{du_1}{dt} = 0 \]</p>
+                    </li>
+                    <li>
+                        <strong>Neumann at</strong> \( r=r_0 \) (\( i=N \)): Using ghost
+                        point \( u_{N+1} \):
+                        <p>
+                            \[ \frac{u_{N+1} - u_{N-1}}{2\Delta r} = 0 \implies u_{N+1} =
+                            u_{N-1} \]
+                        </p>
+                        <p>
+                            Then: \[ \frac{du_N}{dt} = D \left(1 - \frac{u_N}{u_0}\right)^p
+                            \frac{2(u_{N-1} - u_N)}{(\Delta r)^2} + s_c u_N \left(1 -
+                            \frac{u_N}{u_0}\right) \]
+                        </p>
+                    </li>
+                </ul>
+
+                <h4>Initial Conditions</h4>
+
+                <p>
+                    \[ u_i(0) = \begin{cases} 1 & i=1 \\ 0 & i=2,\dots,N \end{cases} \]
+                </p>
+
+                <h4>Time Integration</h4>
+
+                <p>Solve the ODE system:</p>
+
+                <p>
+                    \[ \frac{d\mathbf{u}}{dt} = \mathbf{F}(t, \mathbf{u}), \quad
+                    \mathbf{u}(0) = \mathbf{u}_0 \]
+                </p>
+
+                <p>using a stiff ODE solver (e.g., BDF method).</p>
+
+                <h3>Finite Element Method (FEM)</h3>
+
+                <h4>Weak Form Derivation</h4>
+                <p>Multiply by test function \( v(r) \) with \( v(0) = 0 \):</p>
+                <p>
+                    \[ \int_0^{r_0} \frac{\partial u}{\partial t} v \, dr = \int_0^{r_0}
+                    \left[ D \frac{\partial}{\partial r} \left( \left(1 -
+                    \frac{u}{u_0}\right)^p \frac{\partial u}{\partial r} \right) + s_c u
+                    \left(1 - \frac{u}{u_0}\right) \right] v \, dr \]
+                </p>
+
+                <p>Integrate diffusion term by parts:</p>
+                <p>
+                    \[ \int_0^{r_0} D \frac{\partial}{\partial r} \left( \left(1 -
+                    \frac{u}{u_0}\right)^p \frac{\partial u}{\partial r} \right) v \, dr
+                    = \left[ D \left(1 - \frac{u}{u_0}\right)^p \frac{\partial
+                    u}{\partial r} v \right]_0^{r_0} - \int_0^{r_0} D \left(1 -
+                    \frac{u}{u_0}\right)^p \frac{\partial u}{\partial r} \frac{\partial
+                    v}{\partial r} \, dr \]
+                </p>
+
+                <p>
+                    Boundary term vanishes due to \( v(0) = 0 \) and \( \frac{\partial
+                    u}{\partial r}(r_0) = 0 \), yielding:
+                </p>
+                <p>
+                    \[ \boxed{ \int_0^{r_0} \frac{\partial u}{\partial t} v \, dr +
+                    \int_0^{r_0} D \left(1 - \frac{u}{u_0}\right)^p \frac{\partial
+                    u}{\partial r} \frac{\partial v}{\partial r} \, dr = \int_0^{r_0}
+                    s_c u \left(1 - \frac{u}{u_0}\right) v \, dr } \]
+                </p>
+
+                <h4>Spatial Discretization</h4>
+                <p>
+                    Discretize domain \( [0, r_0] \) into \( N \) nodes with piecewise
+                    linear basis functions \( \phi_j(r) \). Approximate solution:
+                </p>
+                <p>\[ u_h(r, t) = \phi_1(r) + \sum_{j=2}^N u_j(t) \phi_j(r) \]</p>
+                <p>where \( u_1(t) = 1 \) (Dirichlet condition).</p>
+
+                <h4>Semidiscrete System</h4>
+                <p>For test functions \( v = \phi_i \) (\( i = 2, \dots, N \)):</p>
+                <p>
+                    \[ \sum_{j=2}^N \frac{du_j}{dt} \underbrace{\int_0^{r_0} \phi_i
+                    \phi_j \, dr}_{M_{ij}} + \sum_{j=2}^N u_j(t)
+                    \underbrace{\int_0^{r_0} D \left(1 - \frac{u_h}{u_0}\right)^p
+                    \frac{d\phi_i}{dr} \frac{d\phi_j}{dr} \, dr}_{K_{ij}(u)} =
+                    \underbrace{\int_0^{r_0} s_c u_h \left(1 - \frac{u_h}{u_0}\right)
+                    \phi_i \, dr}_{f_i(u)} \]
+                </p>
+
+                <p>Resulting in:</p>
+                <p>
+                    \[ M \frac{d\mathbf{u}}{dt} + K(\mathbf{u}) \mathbf{u} =
+                    \mathbf{f}(\mathbf{u}) \]
+                </p>
+                <p>where \( \mathbf{u} = [u_2, \dots, u_N]^T \).</p>
+
+                <h4>Time Discretization (Backward Euler)</h4>
+                <p>
+                    \[ M \frac{\mathbf{u}^{n+1} - \mathbf{u}^n}{\Delta t} +
+                    K(\mathbf{u}^{n+1}) \mathbf{u}^{n+1} = \mathbf{f}(\mathbf{u}^{n+1})
+                    \]
+                </p>
+
+                <p>Rearrange to nonlinear system:</p>
+                <p>
+                    \[ \mathbf{G}(\mathbf{u}^{n+1}) = M \mathbf{u}^{n+1} + \Delta t
+                    K(\mathbf{u}^{n+1}) \mathbf{u}^{n+1} - \Delta t
+                    \mathbf{f}(\mathbf{u}^{n+1}) - M \mathbf{u}^n = \mathbf{0} \]
+                </p>
+
+                <p>Solved with Newton-Raphson method.</p>
+            </div>
+        </section>
+        <section id="simulation" class="section fade-in">
+            <div class="math-content">
+                <h2>Simulation</h2>
+                <p>
+                    Explore a detailed simulation of the model, showcasing its behavior under various conditions.
+                </p>
+                <button class="nav-button" onclick="window.open('http://127.0.0.1:5000/', '_blank')">View Simulation</button>
+    
+            </div>
+        </section>
+        <section id="about" class="section fade-in">
+            <div class="math-content">
+                <!-- Optional visuals or content -->
+            </div>
+            <h2>About Us</h2>
+            <p>
+                We are a team of passionate students and engineers dedicated to applying mathematical modeling, simulation,
+                and numerical techniques
+                to solve real-world biomedical and engineering challenges.
+            </p>
+            <p><strong>Team Members:</strong></p>
+            <ul>
+                <li>
+                    <a href="https://www.linkedin.com/in/abdelrahman-reda" target="_blank">Abdelrahman Reda</a> – Biomedical
+                    Engineering Student
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/salma-alii/" target="_blank">Salma Ali</a> – Biomedical Engineering
+                    Student
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/amira-yasser1/" target="_blank">Amira Yasser</a> – Biomedical
+                    Engineering Student
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/menna-khalifa-9a368a195/" target="_blank">Menna Khalifa</a> –
+                    Biomedical Engineering Student
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/amro-fekry-3686bb192/" target="_blank">Amro Fekry</a> – Biomedical
+                    Engineering Student
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/alhussien-ayman-488336249/" target="_blank">Alhussien Ayman</a> –
+                    Biomedical Engineering Student
+                </li>
+            </ul>
+        </section>
     </div>
 
     <!-- Floating Action Button -->
-    <div class="fab" onclick="scrollToTop()" title="Back to top">
-        ↑
-    </div>
+    <div class="fab" onclick="scrollToTop()" title="Back to top">↑</div>
 
-    <script>
-        // Create animated background particles
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 50;
-
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 6 + 's';
-                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
-                particlesContainer.appendChild(particle);
-            }
-        }
-
-        // Smooth scrolling to sections
-        function scrollToSection(sectionId) {
-            const element = document.getElementById(sectionId);
-            const headerHeight = document.querySelector('header').offsetHeight + 
-                               document.querySelector('nav').offsetHeight;
-            const elementPosition = element.offsetTop - headerHeight - 20;
-            
-            window.scrollTo({
-                top: elementPosition,
-                behavior: 'smooth'
-            });
-        }
-
-        // Scroll to top
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-
-        // Fade in animation on scroll
-        function handleScrollAnimations() {
-            const elements = document.querySelectorAll('.fade-in');
-            const windowHeight = window.innerHeight;
-
-            elements.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                const elementVisible = 150;
-
-                if (elementTop < windowHeight - elementVisible) {
-                    element.classList.add('visible');
-                }
-            });
-        }
-
-        // Parameter slider updates
-       
-
-        // Update navigation active state on scroll
-        function updateNavigation() {
-            const sections = ['equations', 'analytical', 'numerical'];
-            const navLinks = document.querySelectorAll('nav a');
-            const headerHeight = document.querySelector('header').offsetHeight + 
-                               document.querySelector('nav').offsetHeight;
-
-            let currentSection = '';
-
-            sections.forEach(sectionId => {
-                const section = document.getElementById(sectionId);
-                const sectionTop = section.offsetTop - headerHeight - 100;
-                const sectionBottom = sectionTop + section.offsetHeight;
-
-                if (window.scrollY >= sectionTop && window.scrollY < sectionBottom) {
-                    currentSection = sectionId;
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + currentSection) {
-                    link.classList.add('active');
-                }
-            });
-        }
-
-        // Initialize everything when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            createParticles();
-            handleScrollAnimations();
-            
-            // Add scroll event listeners
-            window.addEventListener('scroll', function() {
-                handleScrollAnimations();
-                updateNavigation();
-            });
-
-            // Add resize event listener
-            window.addEventListener('resize', function() {
-                handleScrollAnimations();
-            });
-
-            // Initial visibility check
-            setTimeout(handleScrollAnimations, 100);
-        });
-
-        // Add some interactive effects
-        document.addEventListener('mousemove', function(e) {
-            const particles = document.querySelectorAll('.particle');
-            const mouseX = e.clientX / window.innerWidth;
-            const mouseY = e.clientY / window.innerHeight;
-
-            particles.forEach((particle, index) => {
-                if (index % 5 === 0) { // Only affect every 5th particle for performance
-                    const speed = 0.5;
-                    const x = (mouseX - 0.5) * speed;
-                    const y = (mouseY - 0.5) * speed;
-                    particle.style.transform = `translate(${x * 20}px, ${y * 20}px)`;
-                }
-            });
-        });
-    </script>
+    <script src="main.js"></script>
 </body>
 </html>
