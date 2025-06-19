@@ -1,442 +1,495 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PDE Solutions for Epidermal Wound Healing</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script>
-        window.MathJax = {
-            tex: {
-                inlineMath: [
-                    ["$", "$"],
-                    ["\\(", "\\)"],
-                ],
-                displayMath: [
-                    ["$$", "$$"],
-                    ["\\[", "\\]"],
-                ],
-            },
-        };
+      window.MathJax = {
+        tex: {
+          inlineMath: [
+            ["$", "$"],
+            ["\\(", "\\)"],
+          ],
+          displayMath: [
+            ["$$", "$$"],
+            ["\\[", "\\]"],
+          ],
+        },
+      };
     </script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+  </head>
 
-<body>
+  <body>
     <!-- Animated background particles -->
     <div class="particles" id="particles"></div>
 
     <!-- Header -->
     <header>
-        <div class="header-content">
-            <h1>PDE Solutions for Epidermal Wound Healing</h1>
-            <p class="subtitle">
-                Mathematical Modeling of Biological Tissue Regeneration
-            </p>
-        </div>
+      <div class="header-content">
+        <h1>PDE Solutions for Epidermal Wound Healing</h1>
+        <p class="subtitle">
+          Mathematical Modeling of Biological Tissue Regeneration
+        </p>
+      </div>
     </header>
 
     <!-- Navigation -->
     <nav>
-        <div class="nav-container">
-            <ul>
-                <li>
-                    <a href="#equations" onclick="scrollToSection('equations')">Equations & Parameters</a>
-                </li>
-                <li>
-                    <a href="#analytical" onclick="scrollToSection('analytical')">Analytical Solutions</a>
-                </li>
-                <li>
-                    <a href="#numerical" onclick="scrollToSection('numerical')">Numerical Solutions</a>
-                </li>
-            </ul>
-        </div>
+      <div class="nav-container">
+        <ul>
+          <li>
+            <a href="#equations" onclick="scrollToSection('equations')"
+              >Equations & Parameters</a
+            >
+          </li>
+          <li>
+            <a href="#analytical" onclick="scrollToSection('analytical')"
+              >Analytical Solutions</a
+            >
+          </li>
+          <li>
+            <a href="#numerical" onclick="scrollToSection('numerical')"
+              >Numerical Solutions</a
+            >
+          </li>
+        </ul>
+      </div>
     </nav>
 
     <!-- Main content -->
     <div class="container">
-        <!-- Equations and Parameters Section -->
-        <section id="equations" class="section fade-in">
-            <h2>Equations & Parameters</h2>
+      <!-- Equations and Parameters Section -->
+      <section id="equations" class="section fade-in">
+        <h2>Equations & Parameters</h2>
 
-            <h3>Fundamental PDE Model</h3>
-            <p>
-                The epidermal wound healing process can be modeled using a system of
-                reaction-diffusion equations that describe the spatiotemporal dynamics
-                of cell density, growth factors, and extracellular matrix components.
-            </p>
+        <h3>Fundamental PDE Model</h3>
+        <p>
+          The epidermal wound healing process can be modeled using a system of
+          reaction-diffusion equations that describe the spatiotemporal dynamics
+          of cell density, growth factors, and extracellular matrix components.
+        </p>
 
-            <div class="equation-box">
-                <h4>Nonlinear Reaction-Diffusion Equation</h4>
-                $$ \frac{\partial u}{\partial t} = D \frac{\partial}{\partial r}
-                \left( \left(1 - \frac{u}{u_0}\right)^p \frac{\partial u}{\partial r}
-                \right) + s_c u \left(1 - \frac{u}{u_0}\right) $$
-            </div>
+        <div class="equation-box">
+          <h4>Nonlinear Reaction-Diffusion Equation</h4>
+          $$ \frac{\partial u}{\partial t} = D \frac{\partial}{\partial r}
+          \left( \left(1 - \frac{u}{u_0}\right)^p \frac{\partial u}{\partial r}
+          \right) + s_c u \left(1 - \frac{u}{u_0}\right) $$
+        </div>
 
-            <div class="info-box">
-                <strong>Where:</strong>
-                <ul>
-                    <li><strong>u(r,t)</strong> is the epithelial cell density,</li>
-                    <li><strong>r</strong> is the position across the wound,</li>
-                    <li><strong>t</strong> is time,</li>
-                    <li><strong>D</strong> is the cell diffusivity,</li>
-                    <li>
-                        <strong>u<sub>0</sub></strong> is the normal (unwounded) cell
-                        density,
-                    </li>
-                    <li><strong>p</strong> controls the nonlinearity of diffusion,</li>
-                    <li>
-                        <strong>s<sub>c</sub></strong> is the cell proliferation rate.
-                    </li>
-                </ul>
-            </div>
+        <div class="info-box">
+          <strong>Where:</strong>
+          <ul>
+            <li><strong>u(r,t)</strong> is the epithelial cell density,</li>
+            <li><strong>r</strong> is the position across the wound,</li>
+            <li><strong>t</strong> is time,</li>
+            <li><strong>D</strong> is the cell diffusivity,</li>
+            <li>
+              <strong>u<sub>0</sub></strong> is the normal (unwounded) cell
+              density,
+            </li>
+            <li><strong>p</strong> controls the nonlinearity of diffusion,</li>
+            <li>
+              <strong>s<sub>c</sub></strong> is the cell proliferation rate.
+            </li>
+          </ul>
+        </div>
 
-            <h3>Boundary and Initial Conditions</h3>
+        <h3>Boundary and Initial Conditions</h3>
 
-            <div class="equation-box">
-                <h4>Initial Conditions</h4>
-                \[ u(r, 0) = 0, \quad 0 \leq r \leq r_0 \] Initially, no epithelial
-                cells are present in the wound.
-            </div>
+        <div class="equation-box">
+          <h4>Initial Conditions</h4>
+          \[ u(r, 0) = 0, \quad 0 \leq r \leq r_0 \] Initially, no epithelial
+          cells are present in the wound.
+        </div>
 
-            <div class="equation-box">
-                <h4>Boundary Conditions</h4>
-                \[ u(0, t) = u_0 = 1, \quad \frac{\partial u}{\partial r} (r_0, t) = 0
-                \] At the wound edge, the cell density is normal. At the center, there
-                is no net cell flow (symmetry condition).
-            </div>
-        </section>
+        <div class="equation-box">
+          <h4>Boundary Conditions</h4>
+          \[ u(0, t) = u_0 = 1, \quad \frac{\partial u}{\partial r} (r_0, t) = 0
+          \] At the wound edge, the cell density is normal. At the center, there
+          is no net cell flow (symmetry condition).
+        </div>
+      </section>
 
-        <section id="analytical" class="section fade-in">
-            <h2>Analytical Solutions</h2>
+      <section id="analytical" class="section fade-in">
+        <h2>Analytical Solutions</h2>
 
-            <div class="equation-box">
-                <h4>Special Case: \( p = 0 \), \( s_c = 0 \)</h4>
-                <p>
-                    When \( p = 0 \) and \( s_c = 0 \), the PDE reduces to the heat
-                    equation:
-                </p>
-                $$\frac{\partial u}{\partial t} = D \frac{\partial^2 u}{\partial
-                r^2}$$
+        <div class="equation-box">
+          <h4>Special Case: \( p = 0 \), \( s_c = 0 \)</h4>
+          <p>
+            When \( p = 0 \) and \( s_c = 0 \), the PDE reduces to the heat
+            equation:
+          </p>
+          $$\frac{\partial u}{\partial t} = D \frac{\partial^2 u}{\partial
+          r^2}$$
 
-                <h4>Solution Derivation</h4>
-                <p>
-                    We decompose \( u(r,t) = u_s(r) + v(r,t) \), where \( u_s(r) \) is
-                    the steady-state solution satisfying:
-                </p>
-                $$D \frac{d^2 u_s}{dr^2} = 0, \quad u_s(0) = 1, \quad
-                \frac{du_s}{dr}(r_0) = 0$$
-                <p>
-                    Solving this gives \( u_s(r) = 1 \). Thus \( v(r,t) = u(r,t) - 1 \)
-                    satisfies:
-                </p>
-                $$\frac{\partial v}{\partial t} = D \frac{\partial^2 v}{\partial r^2},
-                \quad v(0,t) = 0, \quad \frac{\partial v}{\partial r}(r_0,t) = 0,
-                \quad v(r,0) = -1$$
+          <h4>Solution Derivation</h4>
+          <p>
+            We decompose \( u(r,t) = u_s(r) + v(r,t) \), where \( u_s(r) \) is
+            the steady-state solution satisfying:
+          </p>
+          $$D \frac{d^2 u_s}{dr^2} = 0, \quad u_s(0) = 1, \quad
+          \frac{du_s}{dr}(r_0) = 0$$
+          <p>
+            Solving this gives \( u_s(r) = 1 \). Thus \( v(r,t) = u(r,t) - 1 \)
+            satisfies:
+          </p>
+          $$\frac{\partial v}{\partial t} = D \frac{\partial^2 v}{\partial r^2},
+          \quad v(0,t) = 0, \quad \frac{\partial v}{\partial r}(r_0,t) = 0,
+          \quad v(r,0) = -1$$
 
-                <p>Using separation of variables \( v(r,t) = R(r)T(t) \):</p>
-                $$\frac{T'}{DT} = \frac{R''}{R} = -\lambda^2$$
+          <p>Using separation of variables \( v(r,t) = R(r)T(t) \):</p>
+          $$\frac{T'}{DT} = \frac{R''}{R} = -\lambda^2$$
 
-                <p>The spatial ODE with boundary conditions yields:</p>
-                $$R_m(r) = \sin\left( \frac{(2m-1)\pi r}{2r_0} \right), \quad
-                \lambda_m = \frac{(2m-1)\pi}{2r_0}, \quad m = 1, 2, \dots$$ $$T_m(t) =
-                e^{-D \lambda_m^2 t}$$
+          <p>The spatial ODE with boundary conditions yields:</p>
+          $$R_m(r) = \sin\left( \frac{(2m-1)\pi r}{2r_0} \right), \quad
+          \lambda_m = \frac{(2m-1)\pi}{2r_0}, \quad m = 1, 2, \dots$$ $$T_m(t) =
+          e^{-D \lambda_m^2 t}$$
 
-                <p>Thus the general solution becomes:</p>
-                $$v(r,t) = \sum_{m=1}^{\infty} c_m e^{-D\lambda_m^2 t} \sin\left(
-                \frac{(2m-1)\pi r}{2r_0} \right)$$
+          <p>Thus the general solution becomes:</p>
+          $$v(r,t) = \sum_{m=1}^{\infty} c_m e^{-D\lambda_m^2 t} \sin\left(
+          \frac{(2m-1)\pi r}{2r_0} \right)$$
 
-                <p>Applying the initial condition \( v(r,0) = -1 \):</p>
-                $$-1 = \sum_{m=1}^{\infty} c_m \sin\left( \frac{(2m-1)\pi r}{2r_0}
-                \right)$$ $$c_m = -\frac{4}{(2m-1)\pi}$$
+          <p>Applying the initial condition \( v(r,0) = -1 \):</p>
+          $$-1 = \sum_{m=1}^{\infty} c_m \sin\left( \frac{(2m-1)\pi r}{2r_0}
+          \right)$$ $$c_m = -\frac{4}{(2m-1)\pi}$$
 
-                <p>Finally, the complete analytical solution is:</p>
-                $$\boxed{u(r,t) = 1 - \sum_{m=1}^{\infty} \frac{4}{(2m-1)\pi}
-                \exp\left(-D \left( \frac{(2m-1)\pi}{2r_0} \right)^2 t \right)
-                \sin\left( \frac{(2m-1)\pi r}{2r_0} \right)}$$
-            </div>
-        </section>
+          <p>Finally, the complete analytical solution is:</p>
+          $$\boxed{u(r,t) = 1 - \sum_{m=1}^{\infty} \frac{4}{(2m-1)\pi}
+          \exp\left(-D \left( \frac{(2m-1)\pi}{2r_0} \right)^2 t \right)
+          \sin\left( \frac{(2m-1)\pi r}{2r_0} \right)}$$
+        </div>
+      </section>
 
-        <!-- Numerical Solutions Section -->
-        <section id="numerical" class="section fade-in">
-            <h2>Numerical Solutions</h2>
-            <div class="math-content">
-                <h3>Explicit Finite Difference (Forward Euler)</h3>
-                <p>The expanded PDE is discretized as:</p>
-                <p>
-                    \[ \frac{\partial u}{\partial t} \approx \frac{u_i^{n+1} -
-                    u_i^n}{\Delta t} \] \[ \frac{\partial^2 u}{\partial r^2} \approx
-                    \frac{u_{i+1}^n - 2u_i^n + u_{i-1}^n}{(\Delta r)^2}, \quad \left(
-                    \frac{\partial u}{\partial r} \right)^2 \approx \left(
-                    \frac{u_{i+1}^n - u_{i-1}^n}{2\Delta r} \right)^2 \]
-                </p>
+      <!-- Numerical Solutions Section -->
+      <section id="numerical" class="section fade-in">
+        <h2>Numerical Solutions</h2>
+        <div class="math-content">
+          <h3>Explicit Finite Difference (Forward Euler)</h3>
+          <p>The expanded PDE is discretized as:</p>
+          <p>
+            \[ \frac{\partial u}{\partial t} \approx \frac{u_i^{n+1} -
+            u_i^n}{\Delta t} \] \[ \frac{\partial^2 u}{\partial r^2} \approx
+            \frac{u_{i+1}^n - 2u_i^n + u_{i-1}^n}{(\Delta r)^2}, \quad \left(
+            \frac{\partial u}{\partial r} \right)^2 \approx \left(
+            \frac{u_{i+1}^n - u_{i-1}^n}{2\Delta r} \right)^2 \]
+          </p>
 
-                <p>
-                    The update equation for interior points \(i = 2, \dots, N-1\) is:
-                </p>
-                <p>
-                    \[ \begin{aligned} u_i^{n+1} = u_i^n + \Delta t \bigg[ D \bigg(
-                    \underbrace{\left(1 - \frac{u_i^n}{u_0}\right)^p \frac{u_{i+1}^n -
-                    2u_i^n + u_{i-1}^n}{(\Delta r)^2}}_{\text{Diffusion}} -
-                    \underbrace{\frac{p}{u_0} \left(1 - \frac{u_i^n}{u_0}\right)^{p-1}
-                    \left( \frac{u_{i+1}^n - u_{i-1}^n}{2 \Delta r}
-                    \right)^2}_{\text{Nonlinear flux}} \bigg) + \underbrace{s_c u_i^n
-                    \left(1 - \frac{u_i^n}{u_0}\right)}_{\text{Source}} \bigg]
-                    \end{aligned} \]
-                </p>
+          <p>
+            The update equation for interior points \(i = 2, \dots, N-1\) is:
+          </p>
+          <p>
+            \[ \begin{aligned} u_i^{n+1} = u_i^n + \Delta t \bigg[ D \bigg(
+            \underbrace{\left(1 - \frac{u_i^n}{u_0}\right)^p \frac{u_{i+1}^n -
+            2u_i^n + u_{i-1}^n}{(\Delta r)^2}}_{\text{Diffusion}} -
+            \underbrace{\frac{p}{u_0} \left(1 - \frac{u_i^n}{u_0}\right)^{p-1}
+            \left( \frac{u_{i+1}^n - u_{i-1}^n}{2 \Delta r}
+            \right)^2}_{\text{Nonlinear flux}} \bigg) + \underbrace{s_c u_i^n
+            \left(1 - \frac{u_i^n}{u_0}\right)}_{\text{Source}} \bigg]
+            \end{aligned} \]
+          </p>
 
-                <p>Boundary conditions:</p>
-                <p>
-                    \[ \begin{aligned} u_1^{n+1} &= 1 \quad \text{(Dirichlet)} \\
-                    u_N^{n+1} &= u_{N-1}^{n+1} \quad \text{(Neumann)} \end{aligned} \]
-                </p>
+          <p>Boundary conditions:</p>
+          <p>
+            \[ \begin{aligned} u_1^{n+1} &= 1 \quad \text{(Dirichlet)} \\
+            u_N^{n+1} &= u_{N-1}^{n+1} \quad \text{(Neumann)} \end{aligned} \]
+          </p>
 
-                <p>Stability requires:</p>
-                <p>\[ \Delta t \leq \frac{(\Delta r)^2}{2D} \]</p>
+          <p>Stability requires:</p>
+          <p>\[ \Delta t \leq \frac{(\Delta r)^2}{2D} \]</p>
 
-                <h3>Implicit Finite Difference (Backward Euler)</h3>
+          <h3>Implicit Finite Difference (Backward Euler)</h3>
 
-                <p>Discretize at \( t_{n+1} \):</p>
+          <p>Discretize at \( t_{n+1} \):</p>
 
-                <p>
-                    \[ \begin{aligned} \frac{u_i^{n+1} - u_i^n}{\Delta t} = D \bigg[
-                    &\left(1 - \frac{u_i^{n+1}}{u_0}\right)^p \frac{u_{i+1}^{n+1} -
-                    2u_i^{n+1} + u_{i-1}^{n+1}}{(\Delta r)^2} \\ &- \frac{p}{u_0}
-                    \left(1 - \frac{u_i^{n+1}}{u_0}\right)^{p-1} \left(
-                    \frac{u_{i+1}^{n+1} - u_{i-1}^{n+1}}{2 \Delta r} \right)^2 \bigg] \\
-                    &+ s_c u_i^{n+1} \left(1 - \frac{u_i^{n+1}}{u_0}\right)
-                    \end{aligned} \]
-                </p>
+          <p>
+            \[ \begin{aligned} \frac{u_i^{n+1} - u_i^n}{\Delta t} = D \bigg[
+            &\left(1 - \frac{u_i^{n+1}}{u_0}\right)^p \frac{u_{i+1}^{n+1} -
+            2u_i^{n+1} + u_{i-1}^{n+1}}{(\Delta r)^2} \\ &- \frac{p}{u_0}
+            \left(1 - \frac{u_i^{n+1}}{u_0}\right)^{p-1} \left(
+            \frac{u_{i+1}^{n+1} - u_{i-1}^{n+1}}{2 \Delta r} \right)^2 \bigg] \\
+            &+ s_c u_i^{n+1} \left(1 - \frac{u_i^{n+1}}{u_0}\right)
+            \end{aligned} \]
+          </p>
 
-                <p>This forms a nonlinear system:</p>
+          <p>This forms a nonlinear system:</p>
 
-                <p>
-                    \[ F_i(\mathbf{u}^{n+1}) = u_i^{n+1} - u_i^n - \Delta t \cdot
-                    \text{RHS}(\mathbf{u}^{n+1}) = 0 \]
-                </p>
+          <p>
+            \[ F_i(\mathbf{u}^{n+1}) = u_i^{n+1} - u_i^n - \Delta t \cdot
+            \text{RHS}(\mathbf{u}^{n+1}) = 0 \]
+          </p>
 
-                <p>Solved with Newton-Raphson:</p>
+          <p>Solved with Newton-Raphson:</p>
 
-                <p>
-                    \[ J(\mathbf{u}_k) \delta \mathbf{u} = -\mathbf{F}(\mathbf{u}_k),
-                    \quad \mathbf{u}_{k+1} = \mathbf{u}_k + \delta \mathbf{u} \]
-                </p>
+          <p>
+            \[ J(\mathbf{u}_k) \delta \mathbf{u} = -\mathbf{F}(\mathbf{u}_k),
+            \quad \mathbf{u}_{k+1} = \mathbf{u}_k + \delta \mathbf{u} \]
+          </p>
 
-                <p>
-                    where \( J_{ij} = \partial F_i/\partial u_j^{n+1} \) is the
-                    Jacobian.
-                </p>
+          <p>
+            where \( J_{ij} = \partial F_i/\partial u_j^{n+1} \) is the
+            Jacobian.
+          </p>
 
-                <h3>Crank-Nicolson Method</h3>
-                Average explicit and implicit terms:
-                <p>
-                    \[ \begin{aligned} \frac{u_i^{n+1} - u_i^n}{\Delta t} = \frac{1}{2}
-                    \Big[ & D \left( \left(1 - \frac{u_i^n}{u_0}\right)^p
-                    \frac{u_{i+1}^n - 2u_i^n + u_{i-1}^n}{(\Delta r)^2} - \frac{p}{u_0}
-                    \left(1 - \frac{u_i^n}{u_0}\right)^{p-1} \left( \frac{u_{i+1}^n -
-                    u_{i-1}^n}{2\Delta r} \right)^2 \right) \\ + & s_c u_i^n \left(1 -
-                    \frac{u_i^n}{u_0}\right) \Big] \\ + \frac{1}{2} \Big[ & D \left(
-                    \left(1 - \frac{u_i^{n+1}}{u_0}\right)^p \frac{u_{i+1}^{n+1} -
-                    2u_i^{n+1} + u_{i-1}^{n+1}}{(\Delta r)^2} - \frac{p}{u_0} \left(1 -
-                    \frac{u_i^{n+1}}{u_0}\right)^{p-1} \left( \frac{u_{i+1}^{n+1} -
-                    u_{i-1}^{n+1}}{2\Delta r} \right)^2 \right) \\ + & s_c u_i^{n+1}
-                    \left(1 - \frac{u_i^{n+1}}{u_0}\right) \Big] \end{aligned} \]
-                </p>
-                Solved as a nonlinear system using Newton-Raphson. Second-order
-                accurate and unconditionally stable.
+          <h3>Crank-Nicolson Method</h3>
+          Average explicit and implicit terms:
+          <p>
+            \[ \begin{aligned} \frac{u_i^{n+1} - u_i^n}{\Delta t} = \frac{1}{2}
+            \Big[ & D \left( \left(1 - \frac{u_i^n}{u_0}\right)^p
+            \frac{u_{i+1}^n - 2u_i^n + u_{i-1}^n}{(\Delta r)^2} - \frac{p}{u_0}
+            \left(1 - \frac{u_i^n}{u_0}\right)^{p-1} \left( \frac{u_{i+1}^n -
+            u_{i-1}^n}{2\Delta r} \right)^2 \right) \\ + & s_c u_i^n \left(1 -
+            \frac{u_i^n}{u_0}\right) \Big] \\ + \frac{1}{2} \Big[ & D \left(
+            \left(1 - \frac{u_i^{n+1}}{u_0}\right)^p \frac{u_{i+1}^{n+1} -
+            2u_i^{n+1} + u_{i-1}^{n+1}}{(\Delta r)^2} - \frac{p}{u_0} \left(1 -
+            \frac{u_i^{n+1}}{u_0}\right)^{p-1} \left( \frac{u_{i+1}^{n+1} -
+            u_{i-1}^{n+1}}{2\Delta r} \right)^2 \right) \\ + & s_c u_i^{n+1}
+            \left(1 - \frac{u_i^{n+1}}{u_0}\right) \Big] \end{aligned} \]
+          </p>
+          Solved as a nonlinear system using Newton-Raphson. Second-order
+          accurate and unconditionally stable.
 
-                <h3>Method of Lines (MOL)</h3>
+          <h3>Method of Lines (MOL)</h3>
 
-                <p>
-                    The Method of Lines discretizes spatial derivatives to convert the
-                    PDE into a system of ODEs.
-                </p>
+          <p>
+            The Method of Lines discretizes spatial derivatives to convert the
+            PDE into a system of ODEs.
+          </p>
 
-                <h4>Spatial Discretization</h4>
+          <h4>Spatial Discretization</h4>
 
-                <p>
-                    Define grid points \( r_i = (i-1)\Delta r \) with \( \Delta r =
-                    \frac{r_0}{N-1} \). Let \( u_i(t) = u(r_i, t) \).
-                </p>
+          <p>
+            Define grid points \( r_i = (i-1)\Delta r \) with \( \Delta r =
+            \frac{r_0}{N-1} \). Let \( u_i(t) = u(r_i, t) \).
+          </p>
 
-                <p>For interior points (\( i=2,\dots,N-1 \)):</p>
+          <p>For interior points (\( i=2,\dots,N-1 \)):</p>
 
-                <p>
-                    \[ \frac{du_i}{dt} = D \left[ \left(1 - \frac{u_i}{u_0}\right)^p
-                    \frac{u_{i+1} - 2u_i + u_{i-1}}{(\Delta r)^2} - \frac{p}{u_0}
-                    \left(1 - \frac{u_i}{u_0}\right)^{p-1} \left( \frac{u_{i+1} -
-                    u_{i-1}}{2\Delta r} \right)^2 \right] + s_c u_i \left(1 -
-                    \frac{u_i}{u_0}\right) \]
-                </p>
+          <p>
+            \[ \frac{du_i}{dt} = D \left[ \left(1 - \frac{u_i}{u_0}\right)^p
+            \frac{u_{i+1} - 2u_i + u_{i-1}}{(\Delta r)^2} - \frac{p}{u_0}
+            \left(1 - \frac{u_i}{u_0}\right)^{p-1} \left( \frac{u_{i+1} -
+            u_{i-1}}{2\Delta r} \right)^2 \right] + s_c u_i \left(1 -
+            \frac{u_i}{u_0}\right) \]
+          </p>
 
-                <h4>Boundary Conditions</h4>
-                <ul>
-                    <li>
-                        <strong>Dirichlet at</strong> \( r=0 \) (\( i=1 \)):
-                        <p>\[ u_1(t) = 1 \implies \frac{du_1}{dt} = 0 \]</p>
-                    </li>
-                    <li>
-                        <strong>Neumann at</strong> \( r=r_0 \) (\( i=N \)): Using ghost
-                        point \( u_{N+1} \):
-                        <p>
-                            \[ \frac{u_{N+1} - u_{N-1}}{2\Delta r} = 0 \implies u_{N+1} =
-                            u_{N-1} \]
-                        </p>
-                        <p>
-                            Then: \[ \frac{du_N}{dt} = D \left(1 - \frac{u_N}{u_0}\right)^p
-                            \frac{2(u_{N-1} - u_N)}{(\Delta r)^2} + s_c u_N \left(1 -
-                            \frac{u_N}{u_0}\right) \]
-                        </p>
-                    </li>
-                </ul>
+          <h4>Boundary Conditions</h4>
+          <ul>
+            <li>
+              <strong>Dirichlet at</strong> \( r=0 \) (\( i=1 \)):
+              <p>\[ u_1(t) = 1 \implies \frac{du_1}{dt} = 0 \]</p>
+            </li>
+            <li>
+              <strong>Neumann at</strong> \( r=r_0 \) (\( i=N \)): Using ghost
+              point \( u_{N+1} \):
+              <p>
+                \[ \frac{u_{N+1} - u_{N-1}}{2\Delta r} = 0 \implies u_{N+1} =
+                u_{N-1} \]
+              </p>
+              <p>
+                Then: \[ \frac{du_N}{dt} = D \left(1 - \frac{u_N}{u_0}\right)^p
+                \frac{2(u_{N-1} - u_N)}{(\Delta r)^2} + s_c u_N \left(1 -
+                \frac{u_N}{u_0}\right) \]
+              </p>
+            </li>
+          </ul>
 
-                <h4>Initial Conditions</h4>
+          <h4>Initial Conditions</h4>
 
-                <p>
-                    \[ u_i(0) = \begin{cases} 1 & i=1 \\ 0 & i=2,\dots,N \end{cases} \]
-                </p>
+          <p>
+            \[ u_i(0) = \begin{cases} 1 & i=1 \\ 0 & i=2,\dots,N \end{cases} \]
+          </p>
 
-                <h4>Time Integration</h4>
+          <h4>Time Integration</h4>
 
-                <p>Solve the ODE system:</p>
+          <p>Solve the ODE system:</p>
 
-                <p>
-                    \[ \frac{d\mathbf{u}}{dt} = \mathbf{F}(t, \mathbf{u}), \quad
-                    \mathbf{u}(0) = \mathbf{u}_0 \]
-                </p>
+          <p>
+            \[ \frac{d\mathbf{u}}{dt} = \mathbf{F}(t, \mathbf{u}), \quad
+            \mathbf{u}(0) = \mathbf{u}_0 \]
+          </p>
 
-                <p>using a stiff ODE solver (e.g., BDF method).</p>
+          <p>using a stiff ODE solver (e.g., BDF method).</p>
 
-                <h3>Finite Element Method (FEM)</h3>
+          <h3>Finite Element Method (FEM)</h3>
 
-                <h4>Weak Form Derivation</h4>
-                <p>Multiply by test function \( v(r) \) with \( v(0) = 0 \):</p>
-                <p>
-                    \[ \int_0^{r_0} \frac{\partial u}{\partial t} v \, dr = \int_0^{r_0}
-                    \left[ D \frac{\partial}{\partial r} \left( \left(1 -
-                    \frac{u}{u_0}\right)^p \frac{\partial u}{\partial r} \right) + s_c u
-                    \left(1 - \frac{u}{u_0}\right) \right] v \, dr \]
-                </p>
+          <h4>Weak Form Derivation</h4>
+          <p>Multiply by test function \( v(r) \) with \( v(0) = 0 \):</p>
+          <p>
+            \[ \int_0^{r_0} \frac{\partial u}{\partial t} v \, dr = \int_0^{r_0}
+            \left[ D \frac{\partial}{\partial r} \left( \left(1 -
+            \frac{u}{u_0}\right)^p \frac{\partial u}{\partial r} \right) + s_c u
+            \left(1 - \frac{u}{u_0}\right) \right] v \, dr \]
+          </p>
 
-                <p>Integrate diffusion term by parts:</p>
-                <p>
-                    \[ \int_0^{r_0} D \frac{\partial}{\partial r} \left( \left(1 -
-                    \frac{u}{u_0}\right)^p \frac{\partial u}{\partial r} \right) v \, dr
-                    = \left[ D \left(1 - \frac{u}{u_0}\right)^p \frac{\partial
-                    u}{\partial r} v \right]_0^{r_0} - \int_0^{r_0} D \left(1 -
-                    \frac{u}{u_0}\right)^p \frac{\partial u}{\partial r} \frac{\partial
-                    v}{\partial r} \, dr \]
-                </p>
+          <p>Integrate diffusion term by parts:</p>
+          <p>
+            \[ \int_0^{r_0} D \frac{\partial}{\partial r} \left( \left(1 -
+            \frac{u}{u_0}\right)^p \frac{\partial u}{\partial r} \right) v \, dr
+            = \left[ D \left(1 - \frac{u}{u_0}\right)^p \frac{\partial
+            u}{\partial r} v \right]_0^{r_0} - \int_0^{r_0} D \left(1 -
+            \frac{u}{u_0}\right)^p \frac{\partial u}{\partial r} \frac{\partial
+            v}{\partial r} \, dr \]
+          </p>
 
-                <p>
-                    Boundary term vanishes due to \( v(0) = 0 \) and \( \frac{\partial
-                    u}{\partial r}(r_0) = 0 \), yielding:
-                </p>
-                <p>
-                    \[ \boxed{ \int_0^{r_0} \frac{\partial u}{\partial t} v \, dr +
-                    \int_0^{r_0} D \left(1 - \frac{u}{u_0}\right)^p \frac{\partial
-                    u}{\partial r} \frac{\partial v}{\partial r} \, dr = \int_0^{r_0}
-                    s_c u \left(1 - \frac{u}{u_0}\right) v \, dr } \]
-                </p>
+          <p>
+            Boundary term vanishes due to \( v(0) = 0 \) and \( \frac{\partial
+            u}{\partial r}(r_0) = 0 \), yielding:
+          </p>
+          <p>
+            \[ \boxed{ \int_0^{r_0} \frac{\partial u}{\partial t} v \, dr +
+            \int_0^{r_0} D \left(1 - \frac{u}{u_0}\right)^p \frac{\partial
+            u}{\partial r} \frac{\partial v}{\partial r} \, dr = \int_0^{r_0}
+            s_c u \left(1 - \frac{u}{u_0}\right) v \, dr } \]
+          </p>
 
-                <h4>Spatial Discretization</h4>
-                <p>
-                    Discretize domain \( [0, r_0] \) into \( N \) nodes with piecewise
-                    linear basis functions \( \phi_j(r) \). Approximate solution:
-                </p>
-                <p>\[ u_h(r, t) = \phi_1(r) + \sum_{j=2}^N u_j(t) \phi_j(r) \]</p>
-                <p>where \( u_1(t) = 1 \) (Dirichlet condition).</p>
+          <h4>Spatial Discretization</h4>
+          <p>
+            Discretize domain \( [0, r_0] \) into \( N \) nodes with piecewise
+            linear basis functions \( \phi_j(r) \). Approximate solution:
+          </p>
+          <p>\[ u_h(r, t) = \phi_1(r) + \sum_{j=2}^N u_j(t) \phi_j(r) \]</p>
+          <p>where \( u_1(t) = 1 \) (Dirichlet condition).</p>
 
-                <h4>Semidiscrete System</h4>
-                <p>For test functions \( v = \phi_i \) (\( i = 2, \dots, N \)):</p>
-                <p>
-                    \[ \sum_{j=2}^N \frac{du_j}{dt} \underbrace{\int_0^{r_0} \phi_i
-                    \phi_j \, dr}_{M_{ij}} + \sum_{j=2}^N u_j(t)
-                    \underbrace{\int_0^{r_0} D \left(1 - \frac{u_h}{u_0}\right)^p
-                    \frac{d\phi_i}{dr} \frac{d\phi_j}{dr} \, dr}_{K_{ij}(u)} =
-                    \underbrace{\int_0^{r_0} s_c u_h \left(1 - \frac{u_h}{u_0}\right)
-                    \phi_i \, dr}_{f_i(u)} \]
-                </p>
+          <h4>Semidiscrete System</h4>
+          <p>For test functions \( v = \phi_i \) (\( i = 2, \dots, N \)):</p>
+          <p>
+            \[ \sum_{j=2}^N \frac{du_j}{dt} \underbrace{\int_0^{r_0} \phi_i
+            \phi_j \, dr}_{M_{ij}} + \sum_{j=2}^N u_j(t)
+            \underbrace{\int_0^{r_0} D \left(1 - \frac{u_h}{u_0}\right)^p
+            \frac{d\phi_i}{dr} \frac{d\phi_j}{dr} \, dr}_{K_{ij}(u)} =
+            \underbrace{\int_0^{r_0} s_c u_h \left(1 - \frac{u_h}{u_0}\right)
+            \phi_i \, dr}_{f_i(u)} \]
+          </p>
 
-                <p>Resulting in:</p>
-                <p>
-                    \[ M \frac{d\mathbf{u}}{dt} + K(\mathbf{u}) \mathbf{u} =
-                    \mathbf{f}(\mathbf{u}) \]
-                </p>
-                <p>where \( \mathbf{u} = [u_2, \dots, u_N]^T \).</p>
+          <p>Resulting in:</p>
+          <p>
+            \[ M \frac{d\mathbf{u}}{dt} + K(\mathbf{u}) \mathbf{u} =
+            \mathbf{f}(\mathbf{u}) \]
+          </p>
+          <p>where \( \mathbf{u} = [u_2, \dots, u_N]^T \).</p>
 
-                <h4>Time Discretization (Backward Euler)</h4>
-                <p>
-                    \[ M \frac{\mathbf{u}^{n+1} - \mathbf{u}^n}{\Delta t} +
-                    K(\mathbf{u}^{n+1}) \mathbf{u}^{n+1} = \mathbf{f}(\mathbf{u}^{n+1})
-                    \]
-                </p>
+          <h4>Time Discretization (Backward Euler)</h4>
+          <p>
+            \[ M \frac{\mathbf{u}^{n+1} - \mathbf{u}^n}{\Delta t} +
+            K(\mathbf{u}^{n+1}) \mathbf{u}^{n+1} = \mathbf{f}(\mathbf{u}^{n+1})
+            \]
+          </p>
 
-                <p>Rearrange to nonlinear system:</p>
-                <p>
-                    \[ \mathbf{G}(\mathbf{u}^{n+1}) = M \mathbf{u}^{n+1} + \Delta t
-                    K(\mathbf{u}^{n+1}) \mathbf{u}^{n+1} - \Delta t
-                    \mathbf{f}(\mathbf{u}^{n+1}) - M \mathbf{u}^n = \mathbf{0} \]
-                </p>
+          <p>Rearrange to nonlinear system:</p>
+          <p>
+            \[ \mathbf{G}(\mathbf{u}^{n+1}) = M \mathbf{u}^{n+1} + \Delta t
+            K(\mathbf{u}^{n+1}) \mathbf{u}^{n+1} - \Delta t
+            \mathbf{f}(\mathbf{u}^{n+1}) - M \mathbf{u}^n = \mathbf{0} \]
+          </p>
 
-                <p>Solved with Newton-Raphson method.</p>
-            </div>
-        </section>
-        <section id="simulation" class="section fade-in">
-            <div class="math-content">
-                <h2>Simulation</h2>
-                <p>
-                    Explore a detailed simulation of the model, showcasing its behavior under various conditions.
-                </p>
-                <button class="nav-button" onclick="window.open('http://127.0.0.1:5000/', '_blank')">View Simulation</button>
-    
-            </div>
-        </section>
-        <section id="about" class="section fade-in">
-            <div class="math-content">
-                <!-- Optional visuals or content -->
-            </div>
-            <h2>About Us</h2>
-            <p>
-                We are a team of passionate students and engineers dedicated to applying mathematical modeling, simulation,
-                and numerical techniques
-                to solve real-world biomedical and engineering challenges.
-            </p>
-            <p><strong>Team Members:</strong></p>
-            <ul>
-                <li>
-                    <a href="https://www.linkedin.com/in/abdelrahman-reda" target="_blank">Abdelrahman Reda</a> – Biomedical
-                    Engineering Student
-                </li>
-                <li>
-                    <a href="https://www.linkedin.com/in/salma-alii/" target="_blank">Salma Ali</a> – Biomedical Engineering
-                    Student
-                </li>
-                <li>
-                    <a href="https://www.linkedin.com/in/amira-yasser1/" target="_blank">Amira Yasser</a> – Biomedical
-                    Engineering Student
-                </li>
-                <li>
-                    <a href="https://www.linkedin.com/in/menna-khalifa-9a368a195/" target="_blank">Menna Khalifa</a> –
-                    Biomedical Engineering Student
-                </li>
-                <li>
-                    <a href="https://www.linkedin.com/in/amro-fekry-3686bb192/" target="_blank">Amro Fekry</a> – Biomedical
-                    Engineering Student
-                </li>
-                <li>
-                    <a href="https://www.linkedin.com/in/alhussien-ayman-488336249/" target="_blank">Alhussien Ayman</a> –
-                    Biomedical Engineering Student
-                </li>
-            </ul>
-        </section>
+          <p>Solved with Newton-Raphson method.</p>
+        </div>
+      </section>
+      <section id="simulation" class="section fade-in">
+        <div class="math-content">
+          <h2>Simulation</h2>
+          <p>
+            Explore a detailed simulation of the model, showcasing its behavior
+            under various conditions.
+          </p>
+          <button
+            class="nav-button"
+            onclick="window.open('http://127.0.0.1:5000/', '_blank')"
+          >
+            View Simulation
+          </button>
+        </div>
+      </section>
+
+      <section id="about" class="section fade-in">
+        <h2>About Us</h2>
+        <p>
+          We are a team of passionate students and engineers dedicated to
+          applying mathematical modeling, simulation, and numerical techniques
+          to solve real-world biomedical and engineering challenges.
+        </p>
+
+        <div class="team-grid">
+          <div class="team-member">
+            <a
+              href="https://www.linkedin.com/in/abdelrahman-reda"
+              target="_blank"
+            >
+              <i class="ri-linkedin-box-fill"></i> Abdelrahman Reda
+            </a>
+          </div>
+          <div class="team-member">
+            <a
+              href="https://www.linkedin.com/in/alaa-khaled-aa4179284/"
+              target="_blank"
+            >
+              <i class="ri-linkedin-box-fill"></i> Alaa Khaled
+            </a>
+          </div>
+          <div class="team-member">
+            <a
+              href="https://www.linkedin.com/in/alhussien-ayman-488336249/"
+              target="_blank"
+            >
+              <i class="ri-linkedin-box-fill"></i> Alhussien Ayman
+            </a>
+          </div>
+          <div class="team-member">
+            <a
+              href="https://www.linkedin.com/in/amira-yasser1/"
+              target="_blank"
+            >
+              <i class="ri-linkedin-box-fill"></i> Amira Yasser
+            </a>
+          </div>
+          <div class="team-member">
+            <a
+              href="https://www.linkedin.com/in/amro-fekry-3686bb192/"
+              target="_blank"
+            >
+              <i class="ri-linkedin-box-fill"></i> Amro Fekry
+            </a>
+          </div>
+          <div class="team-member">
+            <a
+              href="https://www.linkedin.com/in/andrawos-baheeg-528b4b322/"
+              target="_blank"
+            >
+              <i class="ri-linkedin-box-fill"></i> Andrawos Baheeg
+            </a>
+          </div>
+          <div class="team-member">
+            <a
+              href="https://www.linkedin.com/in/menna-khalifa-9a368a195/"
+              target="_blank"
+            >
+              <i class="ri-linkedin-box-fill"></i> Menna Khalifa
+            </a>
+          </div>
+          <div class="team-member">
+            <a href="https://www.linkedin.com/in/salma-alii/" target="_blank">
+              <i class="ri-linkedin-box-fill"></i> Salma Ali
+            </a>
+          </div>
+        </div>
+      </section>
     </div>
 
     <!-- Floating Action Button -->
     <div class="fab" onclick="scrollToTop()" title="Back to top">↑</div>
 
     <script src="main.js"></script>
-</body>
+  </body>
 </html>
