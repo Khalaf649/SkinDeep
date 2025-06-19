@@ -132,8 +132,14 @@ def index():
         plots['comparison'] = create_plot(comp_data, comp_labels, f"Comparison at t = {params['days']} days")
 
         # === Relative Error Bar Chart vs MOL ===
-         
-        ref_key = 'mol'
+        reference=""
+        if params.get('p', 0) == 0 and params.get('sc',0):
+            ref_key = 'analytical'
+            reference="Analytical solution"
+        else:
+            ref_key = 'mol' 
+            reference= "Method of lines" 
+
         ref_result = all_results.get(ref_key, {}).get('result', None)
 
         if ref_result:
@@ -157,7 +163,7 @@ def index():
                         x=error_result['time_labels'],
                         y=error_result['relative_errors'],
                         mode='lines+markers',
-                        name=f"{curr_result['methodName']} vs Method of Lines"
+                        name=f"{curr_result['methodName']} vs {reference}"
                     ))
 
                 except Exception:
@@ -174,7 +180,7 @@ def index():
                 marker_color='firebrick'
             ))
             error_bar_fig.update_layout(
-                title='Average Relative L2 Error vs Method of Lines',
+                title=f'Average Relative L2 Error vs {reference}',
                 xaxis_title='Method',
                 yaxis_title='Average Relative Error',
                 template='plotly_white',
@@ -185,7 +191,7 @@ def index():
             # Line Plot
             error_time_fig = go.Figure(data=error_over_time)
             error_time_fig.update_layout(
-                title='Relative Error Over Time vs Method of Lines',
+                title=f'Relative Error Over Time vs {reference}',
                 xaxis_title='Time (days)',
                 yaxis_title='Relative Error',
                 template='plotly_white',
