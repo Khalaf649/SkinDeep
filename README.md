@@ -16,7 +16,7 @@ This project models epidermal wound healing using a nonlinear partial differenti
 pip install -r requirements.txt
 ```
 
-2️⃣ Run the app:
+2️⃣ Run the App:
 ```bash
 python app.py
 ```
